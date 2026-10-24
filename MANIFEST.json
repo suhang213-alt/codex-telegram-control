@@ -487,13 +487,13 @@
     },
     {
       "path": "docs/DECISIONS.md",
-      "bytes": 13612,
-      "sha256": "450d9f7d916753faba0412116bf7887afb60262a85884de1581d0bca1349df93"
+      "bytes": 13709,
+      "sha256": "81b4fbbc79ea959ee01b5560977a7bb56f0bad3ae306773ba9b5ba34b292741a"
     },
     {
       "path": "docs/DEVELOPMENT.md",
-      "bytes": 19179,
-      "sha256": "e59e8ff89fff38ae1b564d0b791e8c73bc6b4e595b6e6c6db60a3840f1a6a642"
+      "bytes": 19400,
+      "sha256": "57ada55749377e9f673077bc412fa45ecc027799135f70c711c9b9c321853039"
     },
     {
       "path": "docs/INSTALL_MACOS.md",
@@ -522,8 +522,8 @@
     },
     {
       "path": "docs/QUICK_START.md",
-      "bytes": 8470,
-      "sha256": "de6f9f996d823682d173027b68efb4bbb07af30c88759941463d7280e670ad68"
+      "bytes": 8529,
+      "sha256": "8aba3d12d092fb203be1d4fd38b92f14db6bdb0dfbf155152ef91cec48da744f"
     },
     {
       "path": "docs/RELEASE.md",
