@@ -1,0 +1,20 @@
+name: Container package check
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  package-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify exact public source manifest
+        run: python -B scripts/verify_release.py
+      - name: Build reviewed Python package in Linux container
+        run: docker build --pull --target package-check --tag codex-telegram-control:package-check .
+      - name: Verify installed entry points without network
+        run: |
+          docker run --rm --network none codex-telegram-control:package-check codex-telegram --help
+          docker run --rm --network none codex-telegram-control:package-check codex-telegram-desktop --help

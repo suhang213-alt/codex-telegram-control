@@ -6,6 +6,11 @@
   "prepared_on": "2026-10-24",
   "files": [
     {
+      "path": ".dockerignore",
+      "bytes": 678,
+      "sha256": "8972cd58bb6ffc2212f5eee3073381bfb3d47c1981408623a51bba0bc9d9926e"
+    },
+    {
       "path": ".gitattributes",
       "bytes": 58,
       "sha256": "9a5b3e8c93ebcd35a580f2c2cf3b51cad2f4e5c1514a6984f454f36b355dacd8"
@@ -14,6 +19,11 @@
       "path": ".github/workflows/check.yml",
       "bytes": 1635,
       "sha256": "8eb16675b7b6b149c5c149bef3bf99995c1ed91e5bfe63e4ac7ff20b09f23cc7"
+    },
+    {
+      "path": ".github/workflows/container-package.yml",
+      "bytes": 820,
+      "sha256": "7d0d162e7d4ca2feb9786bcc7a1cf39b7a36dd59cd8284d668ee2e64ed86f5f7"
     },
     {
       "path": ".github/workflows/native-mac.yml",
@@ -486,6 +496,11 @@
       "sha256": "563316657aa5c5b6b5d50be264e24cfb5b41fddd8ad985bef615532ecc6082bb"
     },
     {
+      "path": "Dockerfile",
+      "bytes": 556,
+      "sha256": "66e1b1746c116cf192dd1a38c44c3222e1565411e52c885b3a753221dcaa365d"
+    },
+    {
       "path": "docs/DECISIONS.md",
       "bytes": 13709,
       "sha256": "81b4fbbc79ea959ee01b5560977a7bb56f0bad3ae306773ba9b5ba34b292741a"
@@ -494,6 +509,11 @@
       "path": "docs/DEVELOPMENT.md",
       "bytes": 19400,
       "sha256": "57ada55749377e9f673077bc412fa45ecc027799135f70c711c9b9c321853039"
+    },
+    {
+      "path": "docs/DOCKER_STATUS.md",
+      "bytes": 3453,
+      "sha256": "c1df0c14bf3030be9b689e7d0695ff5c9c6465c0c9cf5a4a367f42492f302658"
     },
     {
       "path": "docs/INSTALL_MACOS.md",
