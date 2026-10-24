@@ -527,13 +527,13 @@
     },
     {
       "path": "docs/RELEASE.md",
-      "bytes": 9503,
-      "sha256": "3a7cfd3ae28aefa4b83f22726085f43c1990e0ef23cbd87b6d5a3ab90bb2b78f"
+      "bytes": 10416,
+      "sha256": "e2bbbe504fb357baf4314b9322abf114fd48e883eeb75923060546b4dc103ba8"
     },
     {
       "path": "docs/VALIDATION.json",
-      "bytes": 5200,
-      "sha256": "b11d0ac80a82bce5b8562b1f527e06727433886e4a0fb08f3bbd66d471fcb878"
+      "bytes": 5725,
+      "sha256": "80d8fd3255c4dff0cf767883a235924a6d48245218d9a0812eda2588b3e0a89b"
     },
     {
       "path": "LICENSE",
@@ -552,8 +552,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9910,
-      "sha256": "25aca3dbbeaee3b69db0a06e24231d70986cccf1c130a748f1e600fa32cab4af"
+      "bytes": 10110,
+      "sha256": "515a4288d3d1a821f88075f47425f5fb14041e6c677b51951ef3514f3fa23ace"
     },
     {
       "path": "scripts/build_release.py",

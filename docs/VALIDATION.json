@@ -135,9 +135,28 @@
     "downloaded_dependencies": false,
     "keychain_tested": false
   },
-  "github_actions": "See Actions for the exact commit; CI does not include an authorized Desktop or real phone.",
+  "github_actions": {
+    "source_commit": "2399edf40af8cdd444754c0f908446733c15ccae",
+    "offline_run_id": 40109078199,
+    "jobs": 12,
+    "all_passed": true,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "python": [
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "mobile_engines": [
+      "Chromium",
+      "WebKit"
+    ]
+  },
   "not_run": [
-    "Real macOS Desktop connection",
+    "Authorized existing Desktop chats and model turns on a real user Mac",
     "Real Telegram bot and Mac/Samsung end-to-end acceptance",
     "Real Android/iOS WebView",
     "Apple Silicon and Intel hardware acceptance",
@@ -152,7 +171,15 @@
     "Desktop readiness follows a typed correlated successful initialize response; notification is diagnostic and malformed replies do not unlock access"
   ],
   "native_mac_ci_probe": {
-    "status": "See separate Signed macOS Desktop compatibility workflow for this commit",
+    "source_commit": "2399edf40af8cdd444754c0f908446733c15ccae",
+    "run_id": 40109078142,
+    "os": "macOS 26 ARM64 GitHub-hosted runner",
+    "app_version": "26.1021.31345",
+    "signed_app": true,
+    "original_desktop_engine": true,
+    "doctor_connected": true,
+    "read_only_rpc_verified": true,
+    "passed": true,
     "account_login": false,
     "model_turn": false,
     "real_phone": false
