@@ -17,6 +17,7 @@ from pathlib import Path
 import re
 import sqlite3
 import threading
+from local_path_safety import resolve_without_redirects
 
 MSK = dt.timezone(dt.timedelta(hours=3))
 UUID = re.compile(r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\Z")
@@ -99,9 +100,7 @@ def _normal_path(value, *, trusted_cwd=False, trusted_rollout=False):
     if not isinstance(value, (str, Path)) or str(value).startswith(("\\\\", "//")):
         raise ValueError("unsafe_path")
     path = Path(value)
-    if not path.is_absolute() or path.resolve(strict=True) != path.absolute():
-        raise ValueError("unsafe_path")
-    return path.resolve(strict=True)
+    return resolve_without_redirects(path)
 
 
 class _RecordEnvelope:

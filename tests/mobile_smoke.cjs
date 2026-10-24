@@ -188,7 +188,11 @@ async function runProfile(origin, profile) {
     const downloadPromise = page.waitForEvent('download');
     await page.locator('#files button').first().click();
     const download = await downloadPromise;
-    assert.equal(download.suggestedFilename(), 'Синтетический отчёт.txt');
+    const downloadName = download.suggestedFilename();
+    // macOS WebKit can return canonical decomposition (NFD). Compare spelling
+    // in NFC only; keep case, accents, extension and the file bytes exact.
+    assert.equal(downloadName.normalize('NFC'), 'Синтетический отчёт.txt');
+    row.download_filename = { raw: downloadName, nfc: downloadName.normalize('NFC') };
     assert.deepEqual(await fs.readFile(await download.path()), original);
     row.checks.push('model-and-effort-controls', 'file-name-safety', 'unicode-download-original-bytes');
     await page.locator('#settings').click();

@@ -4,6 +4,7 @@ Authentication and Codex scope belong to the caller. This module reads exactly
 one statically registered JSON; it does not execute commands or contact services.
 """
 from __future__ import annotations
+from local_path_safety import resolve_without_redirects
 import bridge_config as config
 
 import datetime as dt
@@ -203,8 +204,10 @@ def current(thread_id, *, now=None):
     if task_id != thread_id:
         return _unavailable(thread_id, "invalid_binding", checked)
     try:
-        # The lexical registered path must not be redirected through a symlink.
-        if path.resolve(strict=True) != path.absolute():
+        # DOS short names refer to the same file; links/junctions still cannot redirect it.
+        try:
+            resolve_without_redirects(path)
+        except ValueError:
             return _unavailable(thread_id, "invalid_binding", checked)
         with path.open("rb") as handle:
             payload = handle.read(MAX_BYTES + 1)

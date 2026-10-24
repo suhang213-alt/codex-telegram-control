@@ -8,11 +8,11 @@
   },
   "core_and_macos_fixtures": {
     "schema": "offline-core-checks/1",
-    "tests": 87,
+    "tests": 89,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "elapsed_seconds": 19.5,
+    "elapsed_seconds": 30.828,
     "external_network_attempts": 0,
     "unapproved_process_attempts": 0,
     "synthetic_app_server": true,
@@ -21,10 +21,10 @@
     "passed": true
   },
   "windows_adapter": {
-    "tests": 285,
+    "tests": 291,
     "skipped": 0,
     "passed": true,
-    "runner_seconds": 22.5,
+    "runner_seconds": 23.705,
     "network_attempt_counter": "not instrumented",
     "network_policy": "Runner blocks urllib.urlopen and socket.connect; Popen prohibited; fixture multiprocessing allowed.",
     "live_telegram": false,
@@ -64,7 +64,11 @@
           "no-page-errors",
           "no-external-network"
         ],
-        "status": "pass"
+        "status": "pass",
+        "download_filename": {
+          "raw": "РЎРёРЅС‚РµС‚РёС‡РµСЃРєРёР№ РѕС‚С‡С‘С‚.txt",
+          "nfc": "РЎРёРЅС‚РµС‚РёС‡РµСЃРєРёР№ РѕС‚С‡С‘С‚.txt"
+        }
       },
       {
         "profile": "android-wide",
@@ -93,7 +97,11 @@
           "no-page-errors",
           "no-external-network"
         ],
-        "status": "pass"
+        "status": "pass",
+        "download_filename": {
+          "raw": "РЎРёРЅС‚РµС‚РёС‡РµСЃРєРёР№ РѕС‚С‡С‘С‚.txt",
+          "nfc": "РЎРёРЅС‚РµС‚РёС‡РµСЃРєРёР№ РѕС‚С‡С‘С‚.txt"
+        }
       },
       {
         "profile": "ios-size",
@@ -122,11 +130,15 @@
           "no-page-errors",
           "no-external-network"
         ],
-        "status": "pass"
+        "status": "pass",
+        "download_filename": {
+          "raw": "РЎРёРЅС‚РµС‚РёС‡РµСЃРєРёР№ РѕС‚С‡С‘С‚.txt",
+          "nfc": "РЎРёРЅС‚РµС‚РёС‡РµСЃРєРёР№ РѕС‚С‡С‘С‚.txt"
+        }
       }
     ],
     "status": "pass",
-    "elapsed_seconds": 15.215
+    "elapsed_seconds": 25.017
   },
   "packaging": {
     "checks": 13,
@@ -144,5 +156,9 @@
     "Keychain with a real bot token",
     "Desktop sleep and update compatibility"
   ],
-  "release_status": "candidate"
+  "release_status": "candidate",
+  "ci_regressions_fixed": [
+    "Canonical filesystem aliases without permitting symlinks or junctions",
+    "Canonical Unicode filename equivalence; downloaded contents still compared byte-for-byte"
+  ]
 }

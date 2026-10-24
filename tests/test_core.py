@@ -179,6 +179,36 @@ class ControllerTests(unittest.TestCase):
         self.assertFalse(read_progress(self.work,"../test-thread")["available"])
         snapshot["task_id"]="other-thread";atomic_json(directory/"test-thread.json",snapshot)
         self.assertFalse(read_progress(self.work,"test-thread")["available"])
+    def test_progress_canonical_workspace_alias_and_outside_target(self):
+        directory=self.work/".task-progress";directory.mkdir()
+        path=directory/"test-thread.json"
+        snapshot={"schema":"pbc-task-status/1","task_id":"test-thread",
+                  "updated_at":datetime.now(timezone.utc).isoformat(),"finished_at":None,
+                  "checkpoints":[{"label":"Synthetic stage","done":False,"percent":25}]}
+        atomic_json(path,snapshot)
+        canonical=self.root/"canonical-work"
+        resolved_file=canonical/".task-progress/test-thread.json"
+        original_resolve=Path.resolve
+        def resolve_alias(candidate,*args,**kwargs):
+            # Model /var -> /private/var and Windows short-name aliases on any
+            # test host, without requiring permission to create OS symlinks.
+            if candidate==self.work:return canonical
+            if candidate==path:return resolved_file
+            return original_resolve(candidate,*args,**kwargs)
+        with patch.object(Path,"resolve",autospec=True,side_effect=resolve_alias):
+            value=read_progress(self.work,"test-thread")
+            self.assertTrue(value["available"]);self.assertEqual(value["percent"],25)
+            resolved_file=self.root/"outside/.task-progress/test-thread.json"
+            self.assertFalse(read_progress(self.work,"test-thread")["available"])
+    def test_progress_symlink_directory_and_file_still_rejected(self):
+        directory=self.work/".task-progress";directory.mkdir()
+        path=directory/"test-thread.json"
+        atomic_json(path,{"schema":"pbc-task-status/1","task_id":"test-thread",
+                          "updated_at":datetime.now(timezone.utc).isoformat(),"finished_at":None,
+                          "checkpoints":[{"label":"Synthetic stage","done":False,"percent":25}]})
+        for redirected in (directory,path):
+            with self.subTest(redirected=redirected.name), patch.object(Path,"is_symlink",autospec=True,side_effect=lambda candidate:candidate==redirected):
+                self.assertFalse(read_progress(self.work,"test-thread")["available"])
     def test_new_turn_rejects_fresh_previous_phase_completion(self):
         self.new()
         directory=self.work/".task-progress";directory.mkdir()

@@ -69,7 +69,7 @@ class ConfigurationTests(unittest.TestCase):
         self.assertFalse((config.plugin_dir()/"server.mjs").exists())
         (root/"1").mkdir(parents=True)
         (root/"1/server.mjs").write_text("// artificial fixture")
-        self.assertEqual(config.plugin_dir(),root/"1")
+        self.assertEqual(config.plugin_dir(),(root/"1").resolve())
         (root/"2").mkdir()
         (root/"2/server.mjs").write_text("// artificial fixture")
         self.assertFalse((config.plugin_dir()/"server.mjs").exists())

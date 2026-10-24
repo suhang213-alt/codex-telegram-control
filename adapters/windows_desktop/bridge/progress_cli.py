@@ -16,6 +16,7 @@ import sys
 import tempfile
 
 from task_progress import MAX_BYTES, project
+from local_path_safety import resolve_without_redirects
 
 _UUID = re.compile(r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\Z")
 _MSK = dt.timezone(dt.timedelta(hours=3))
@@ -23,13 +24,11 @@ _MSK = dt.timezone(dt.timedelta(hours=3))
 
 def _reject_redirect(path):
     for item in (path, *path.parents):
-        if item.is_symlink() or (hasattr(item, "is_junction") and item.is_junction()):
-            raise ValueError("redirected_path")
         try:
             # Cloud placeholders can be reparse points without redirecting the
-            # pathname. Reject actual redirection, not every cloud attribute.
-            if item.resolve(strict=True) != item.absolute():
-                raise ValueError("redirected_path")
+            # pathname. The nearest existing ancestor also validates its parents.
+            resolve_without_redirects(item)
+            return
         except FileNotFoundError:
             continue
 

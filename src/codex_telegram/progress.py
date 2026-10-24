@@ -12,7 +12,9 @@ def read_progress(workspace, identifier, minimum_started_at=None):
     directory = workspace / ".task-progress"
     path = directory / (identifier + ".json")
     try:
-        if directory.is_symlink() or path.is_symlink() or not path.resolve().is_relative_to(workspace):
+        # macOS /var aliases and Windows short names can resolve differently
+        # from the caller's spelling. Compare canonical paths on both sides.
+        if directory.is_symlink() or path.is_symlink() or not path.resolve(strict=True).is_relative_to(workspace.resolve(strict=True)):
             return missing
         with path.open("rb") as stream:
             body = stream.read(262145)
