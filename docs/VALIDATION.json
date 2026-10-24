@@ -8,11 +8,11 @@
   },
   "core_and_macos_fixtures": {
     "schema": "offline-core-checks/1",
-    "tests": 90,
+    "tests": 92,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "elapsed_seconds": 20.547,
+    "elapsed_seconds": 20.406,
     "external_network_attempts": 0,
     "unapproved_process_attempts": 0,
     "synthetic_app_server": true,

@@ -162,6 +162,8 @@ class GatewayCore:
         self.connected = True
         self.initialized = False
         self.initialize_ok = False
+        self.initialize_requested = False
+        self.initialize_failed = False
         self.rpc_counter = 0
         self.rpc_pending = {}
         self.gui_requests = {}
@@ -264,8 +266,10 @@ class GatewayCore:
                 if method == "initialized": self.initialized = True
                 if "id" in value and method in {"initialize", "thread/list", "thread/read", "thread/resume", "thread/start"}:
                     try:
+                        request_key = typed(value["id"])
+                        if method == "initialize": self.initialize_requested = True
                         if len(self.gui_requests) < 4096:
-                            self.gui_requests[typed(value["id"])] = method
+                            self.gui_requests[request_key] = method
                     except SafeError: pass
             return False
 
@@ -332,6 +336,7 @@ class GatewayCore:
                         return True
                     try: method = self.gui_requests.pop(typed(identifier), None)
                     except SafeError: method = None
+                    if method == "initialize" and "error" in value: self.initialize_failed = True
                     if "error" not in value:
                         if method == "initialize": self.initialize_ok = True
                         self._observed_result(method, value.get("result"))
@@ -523,6 +528,11 @@ class GatewayCore:
                 except Exception: pass
             result = {"ready":self.ready,"connected":self.connected,"epoch":self.epoch,"backend":"desktop",
                     "ambiguous":not compatible,
+                    # Boolean observations for this engine lifetime only. No
+                    # initialize IDs, parameters, result, or error are exposed.
+                    "handshake":{"initialize_requested":self.initialize_requested,
+                                 "initialize_failed":self.initialize_failed,
+                                 "initialize_ok":self.initialize_ok,"initialized":self.initialized},
                     "active":{k:v for k,v in self.active.items() if self._scoped(k)},
                     "pending":[r["event"] for r in self.pending.values() if r["state"] == "pending" and self._scoped(r["event"]["params"]["threadId"])],
                     "contexts":[event for key,event in self.contexts.items() if self._scoped(key[0])],"cursor":self.cursor}

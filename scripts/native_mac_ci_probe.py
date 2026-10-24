@@ -164,7 +164,7 @@ def main():
         "gui_session_available", "launched", "connected", "ready", "backend_desktop",
         "ambiguous", "doctor_connected", "poll_timed_out", "cleanup_complete", "passed")}
     receipt.update(app_version="", bundle_id="", team_id="", stage="environment", error_type="",
-                   safe_error_reason="", bundle_diagnostics={})
+                   safe_error_reason="", bundle_diagnostics={}, handshake={})
     if not (sys.platform == "darwin" and platform.machine() == "arm64"
             and os.environ.get("GITHUB_ACTIONS") == "true"
             and os.environ.get("RUNNER_ENVIRONMENT") == "github-hosted"):
@@ -212,8 +212,11 @@ def main():
         if len(candidates) != 1:
             raise RuntimeError("Installer has no unique supported bundle")
         receipt["stage"] = "inspect_original"
-        receipt["bundle_diagnostics"] = bundle_diagnostics(candidates[0], probe_platform)
-        original = probe_platform.inspect_bundle(candidates[0])
+        try:
+            original = probe_platform.inspect_bundle(candidates[0])
+        except SafeError:
+            receipt["bundle_diagnostics"] = bundle_diagnostics(candidates[0], probe_platform)
+            raise
         receipt["bundle_verified"] = True
         app = root / "Codex.app"
         receipt["stage"] = "copy_verify"
@@ -263,6 +266,10 @@ def main():
                     for key in ("connected", "ready", "ambiguous"):
                         receipt[key] = status.get(key) is True
                     receipt["backend_desktop"] = status.get("backend") == "desktop"
+                    handshake = status.get("handshake", {})
+                    if isinstance(handshake, dict):
+                        receipt["handshake"] = {key: handshake.get(key) is True for key in (
+                            "initialize_requested", "initialize_failed", "initialize_ok", "initialized")}
                     if receipt["connected"] and receipt["ready"] and receipt["backend_desktop"] and not receipt["ambiguous"]:
                         # Doctor uses signature/hash + status only. Its console
                         # output is discarded; no native payload is logged.

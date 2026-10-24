@@ -80,6 +80,42 @@ class GatewayTests(unittest.TestCase):
         for frame in frames:self.core.from_gui(frame);self.core.from_engine(frame)
         self.assertEqual(self.engine,frames);self.assertEqual(self.gui,frames)
 
+    def test_handshake_diagnostics_observe_success_without_payloads(self):
+        expected={"initialize_requested":False,"initialize_failed":False,"initialize_ok":False,"initialized":False}
+        self.assertEqual(self.core.status()["handshake"],expected)
+        self.core.from_gui(wire({"id":"PRIVATE_INIT_ID","method":"initialize","params":{"private":"PRIVATE_INIT_PARAMS"}}))
+        expected["initialize_requested"]=True
+        self.assertEqual(self.core.status()["handshake"],expected)
+        self.assertFalse(self.core.ready)
+        self.core.from_engine(wire({"id":"PRIVATE_INIT_ID","result":{"private":"PRIVATE_INIT_RESULT"}}))
+        expected["initialize_ok"]=True
+        self.assertEqual(self.core.status()["handshake"],expected)
+        self.assertFalse(self.core.ready)
+        self.core.from_gui(wire({"method":"initialized"}))
+        expected["initialized"]=True
+        status=self.core.status()
+        self.assertEqual(status["handshake"],expected)
+        self.assertTrue(status["ready"])
+        self.assertTrue(all(type(value) is bool for value in status["handshake"].values()))
+        self.assertNotIn("PRIVATE_INIT",json.dumps(status))
+
+    def test_handshake_failure_requires_matching_response_and_keeps_ready_gate(self):
+        self.core.from_gui(wire({"id":42,"method":"initialize","params":{}}))
+        self.core.from_engine(wire({"id":"42","error":{"message":"PRIVATE_UNRELATED_ERROR"}}))
+        self.assertFalse(self.core.status()["handshake"]["initialize_failed"])
+        self.core.from_engine(wire({"id":42,"error":{"message":"PRIVATE_INIT_ERROR"}}))
+        self.core.from_gui(wire({"method":"initialized"}))
+        self.assertEqual(self.core.status()["handshake"],{
+            "initialize_requested":True,"initialize_failed":True,"initialize_ok":False,"initialized":True})
+        self.assertFalse(self.core.ready)
+        # A successful Desktop retry retains the failure observation, while
+        # readiness continues to use only its original conditions.
+        self.core.from_gui(wire({"id":43,"method":"initialize","params":{}}))
+        self.core.from_engine(wire({"id":43,"result":{}}))
+        self.assertTrue(self.core.ready)
+        self.assertTrue(self.core.status()["handshake"]["initialize_failed"])
+        self.assertNotIn("PRIVATE_",json.dumps(self.core.status()))
+
     def test_scope_filters_list_and_rejects_foreign_read_mutation(self):
         self.ready()
         self.assertEqual([t["id"] for t in self.call("thread/list",{})["data"]],["inside"])
