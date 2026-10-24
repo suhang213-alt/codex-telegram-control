@@ -104,7 +104,10 @@ def inspect_bundle(path: Path | str) -> dict:
         raise SafeError("Select a supported installed Codex Desktop bundle with identifier com.openai.codex.") from None
     requirement = (f'identifier "{BUNDLE_ID}" and anchor apple generic '
                    f'and certificate leaf[subject.OU] = "{TEAM_ID}"')
-    verified = _command(["/usr/bin/codesign", "--verify", "--deep", "--strict", "-R", requirement, str(bundle)])
+    # As in the official Desktop bootstrap, verify nested code and the pinned
+    # signer together. '=' selects inline requirement source; without it -R
+    # interprets the argument as a requirements filename.
+    verified = _command(["/usr/bin/codesign", "--verify", "--deep", "--strict", "-R", "=" + requirement, str(bundle)])
     if verified.returncode:
         raise SafeError("Desktop signature verification failed. Reinstall the official app; signing and quarantine settings were not changed.")
     details = _command(["/usr/bin/codesign", "-dv", "--verbose=4", str(bundle)])

@@ -1,8 +1,9 @@
 """Candidate CI-only signed Desktop probe; never signs in or starts a turn.
 
 Run only on a disposable GitHub-hosted macOS ARM64 runner after pip install .
-The checked application, its account-free profile and settings stay in RUNNER_TEMP.
-Only the final allowlisted receipt may be uploaded, never the temporary directory.
+The copied app, empty CODEX_HOME and bridge settings stay in RUNNER_TEMP.
+Desktop may also create ordinary GUI state in the disposable runner's home.
+Only the final allowlisted receipt may be uploaded, never either data directory.
 """
 from __future__ import annotations
 import argparse
@@ -49,7 +50,8 @@ def bundle_diagnostics(bundle, adapter):
     bundle = bundle.resolve(strict=True)
     result = {"bundle_name": "", "app_version": "", "metadata_bundle_id": "",
               "main_executable_name": "", "expected_cli": {}, "main_executable": {},
-              "codesign_verify_returncode": None, "codesign_details_returncode": None,
+              "codesign_integrity_returncode": None, "codesign_identity_returncode": None,
+              "codesign_combined_inline_returncode": None, "codesign_details_returncode": None,
               "signing_identifier": "", "signing_team_id": "", "codex_candidates": [],
               "candidate_scan_truncated": False}
     def label(value):
@@ -82,9 +84,11 @@ def bundle_diagnostics(bundle, adapter):
     except (OSError, ValueError, TypeError):
         pass
     result["expected_cli"] = facts(bundle / adapter.CLI_RESOURCE)
-    requirement = (f'identifier "{adapter.BUNDLE_ID}" and anchor apple generic '
+    requirement = (f'=identifier "{adapter.BUNDLE_ID}" and anchor apple generic '
                    f'and certificate leaf[subject.OU] = "{adapter.TEAM_ID}"')
-    for kind, arguments in (("verify", ["--verify", "--deep", "--strict", "-R", requirement]),
+    for kind, arguments in (("integrity", ["--verify", "--deep", "--strict"]),
+                            ("identity", ["--verify", "--strict", "-R", requirement]),
+                            ("combined_inline", ["--verify", "--deep", "--strict", "-R", requirement]),
                             ("details", ["-dv", "--verbose=4"])):
         try:
             response = subprocess.run(["/usr/bin/codesign", *arguments, str(bundle)], stdin=subprocess.DEVNULL,

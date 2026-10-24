@@ -532,8 +532,8 @@
     },
     {
       "path": "docs/VALIDATION.json",
-      "bytes": 4951,
-      "sha256": "c8403844de4dee4ee447307fcd2d11e47af97196dd78bcf852c63b217db17bb8"
+      "bytes": 5046,
+      "sha256": "b37ea5828616f3c9a423d7ab7ec8ec4b3d54276521b8102eb1d13cc63444863a"
     },
     {
       "path": "LICENSE",
@@ -592,8 +592,8 @@
     },
     {
       "path": "scripts/native_mac_ci_probe.py",
-      "bytes": 15654,
-      "sha256": "66dda55fc30d3e5a1f1b4ab826f77d70021a92c53a90dfd212ad7571a537b98b"
+      "bytes": 15994,
+      "sha256": "8153c5a7e608b5750d493385ce98d6897f6b96f4e1e1e888930e3236e01896d3"
     },
     {
       "path": "scripts/test_offline.py",
@@ -657,8 +657,8 @@
     },
     {
       "path": "src/codex_telegram/macos_platform.py",
-      "bytes": 14475,
-      "sha256": "d922e999551aca9a3624d9620a8631e4d2c41d4446a9739d98b49db2c6e25e47"
+      "bytes": 14693,
+      "sha256": "6b94af839bd5c3c615b03baf7e25a4b65b4f9e5862c2ad26145785b6bca09e99"
     },
     {
       "path": "src/codex_telegram/progress.py",
@@ -727,8 +727,8 @@
     },
     {
       "path": "tests/test_macos_platform.py",
-      "bytes": 15588,
-      "sha256": "48c3b446e43fa73f274bd47e2a381ab0ed939905a7e6df476babf63ded09b011"
+      "bytes": 16462,
+      "sha256": "cd6e04387b42594a170407e2186f777a7e82f3abf869ed1a748e03a6b0fe67e4"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",

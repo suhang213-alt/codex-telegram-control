@@ -71,8 +71,18 @@ class PlatformTests(unittest.TestCase):
         self.assertEqual(identity["team_id"], platform.TEAM_ID)
         verify = self.commands[0]
         self.assertEqual(verify[:5], ["/usr/bin/codesign", "--verify", "--deep", "--strict", "-R"])
-        self.assertIn('anchor apple generic', verify[5])
-        self.assertIn(platform.TEAM_ID, verify[5])
+        self.assertEqual(verify[5], f'=identifier "{platform.BUNDLE_ID}" and anchor apple generic '
+                         f'and certificate leaf[subject.OU] = "{platform.TEAM_ID}"')
+        self.assertEqual(verify[6], str(self.bundle))
+
+    def test_inline_requirement_is_not_interpreted_as_a_filename(self):
+        original = platform._command.side_effect
+        def codesign(args, **kwargs):
+            if "-R" in args and not args[args.index("-R") + 1].startswith("="):
+                return SimpleNamespace(returncode=1, stdout="", stderr="requirement file unavailable")
+            return original(args, **kwargs)
+        platform._command.side_effect = codesign
+        self.assertEqual(platform.inspect_bundle(self.bundle)["bundle_id"], platform.BUNDLE_ID)
 
     def test_foreign_bundle_identifier_rejected_before_codesign(self):
         self.write_info(CFBundleIdentifier="org.example.synthetic")
@@ -91,10 +101,13 @@ class PlatformTests(unittest.TestCase):
             platform.inspect_bundle(self.bundle)
 
     def test_invalid_signature_cannot_be_overridden_by_display_metadata(self):
-        platform._command.return_value = SimpleNamespace(returncode=1, stdout="", stderr="")
+        platform._command.return_value = SimpleNamespace(returncode=1, stdout="", stderr=(
+            f"Identifier={platform.BUNDLE_ID}\nTeamIdentifier={platform.TEAM_ID}\n"))
         platform._command.side_effect = None
         with self.assertRaises(SafeError):
             platform.inspect_bundle(self.bundle)
+        self.assertEqual(platform._command.call_count, 1)
+        self.assertNotIn("-dv", platform._command.call_args.args[0])
 
     def test_foreign_signer_rejected(self):
         def result(args):
