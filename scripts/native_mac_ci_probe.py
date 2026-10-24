@@ -162,7 +162,7 @@ def main():
     receipt = {key: False for key in (
         "runner_supported", "downloaded", "mounted", "bundle_verified", "copied_unchanged",
         "gui_session_available", "launched", "connected", "ready", "backend_desktop",
-        "ambiguous", "doctor_connected", "poll_timed_out", "cleanup_complete", "passed")}
+        "ambiguous", "doctor_connected", "read_only_rpc_verified", "poll_timed_out", "cleanup_complete", "passed")}
     receipt.update(app_version="", bundle_id="", team_id="", stage="environment", error_type="",
                    safe_error_reason="", bundle_diagnostics={}, handshake={})
     if not (sys.platform == "darwin" and platform.machine() == "arm64"
@@ -275,6 +275,14 @@ def main():
                         # output is discarded; no native payload is logged.
                         with contextlib.redirect_stdout(io.StringIO()):
                             receipt["doctor_connected"] = doctor(config, home) == 0
+                        client = DesktopRpc(home, lambda _event: None, start_events=False, bootstrap=False)
+                        try:
+                            listing = client.call("thread/list", {"limit": 5,
+                                "sourceKinds": ["cli", "vscode", "appServer"]})
+                            receipt["read_only_rpc_verified"] = (isinstance(listing, dict)
+                                and listing.get("data") == [])
+                        finally:
+                            client.close()
                         break
                 except (SafeError, OSError, ValueError):
                     pass
@@ -311,7 +319,7 @@ def main():
             except Exception:
                 pass
         receipt["cleanup_complete"] = process_clean and unmounted
-        receipt["passed"] = (receipt["doctor_connected"] and receipt["cleanup_complete"]
+        receipt["passed"] = (receipt["doctor_connected"] and receipt["read_only_rpc_verified"] and receipt["cleanup_complete"]
                              and receipt["ready"] and receipt["connected"] and not receipt["ambiguous"])
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")

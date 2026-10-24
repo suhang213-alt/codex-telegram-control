@@ -75,6 +75,52 @@ class GatewayTests(unittest.TestCase):
         self.assertTrue(self.core.status()["ready"])
         self.assertEqual(sum(json.loads(x).get("method")=="initialize" for x in self.engine),1)
 
+    def test_desktop_initialize_ack_without_notification_is_ready(self):
+        changes=[];self.core.on_status=lambda:changes.append(self.core.ready)
+        request=wire({"id":"desktop-init","method":"initialize","params":{}})
+        self.core.from_gui(request)
+        self.assertEqual(self.engine,[request])
+        self.assertFalse(self.core.ready)
+        self.core.from_engine(wire({"id":"desktop-init","result":{}}))
+        self.assertTrue(self.core.ready)
+        self.assertFalse(self.core.status()["handshake"]["initialized"])
+        self.assertEqual(changes,[True])
+        self.assertEqual(self.call("thread/list",{})["data"][0]["id"],"inside")
+        self.assertEqual(sum(json.loads(frame).get("method")=="initialize" for frame in self.engine),1)
+        self.core.compatibility_check=lambda:False
+        self.assertFalse(self.core.ready)
+        self.core.compatibility_check=lambda:True
+        self.core.connected=False
+        self.assertFalse(self.core.ready)
+
+    def test_unrelated_or_failed_initialize_reply_does_not_unlock_gateway(self):
+        self.core.from_engine(wire({"id":42,"result":{}}))
+        self.assertFalse(self.core.ready)
+        self.assertFalse(self.core.status()["handshake"]["initialize_requested"])
+        self.core.from_gui(wire({"id":42,"method":"initialize","params":{}}))
+        for identifier in ("42",43):
+            self.core.from_engine(wire({"id":identifier,"result":{}}))
+            self.assertFalse(self.core.ready)
+        self.core.from_engine(wire({"id":42,"error":{"message":"synthetic failure"}}))
+        self.core.from_gui(wire({"method":"initialized"}))
+        self.assertFalse(self.core.ready)
+        before=list(self.engine)
+        with self.assertRaises(SafeError):self.call("thread/list",{})
+        self.assertEqual(self.engine,before)
+
+    def test_malformed_initialize_response_cannot_unlock_gateway(self):
+        for index, body in enumerate(({}, {"result":None}, {"result":[]}, {"result":"invalid"}, {"result":1})):
+            with self.subTest(body=body):
+                identifier="init-"+str(index)
+                self.core.from_gui(wire({"id":identifier,"method":"initialize","params":{}}))
+                self.core.from_engine(wire(dict(body,id=identifier)))
+                self.assertFalse(self.core.ready)
+                self.assertFalse(self.core.status()["handshake"]["initialize_ok"])
+                with self.assertRaises(SafeError):self.call("thread/list",{})
+        self.core.from_gui(wire({"id":"valid-init","method":"initialize","params":{}}))
+        self.core.from_engine(wire({"id":"valid-init","result":{}}))
+        self.assertTrue(self.core.ready)
+
     def test_unknown_and_malformed_frames_pass_exactly(self):
         frames=[b'{"method":"future/notice","params":{"thread":"unexpected"}}\n', b'not json\n', b'{"method":[],"params":null}\n']
         for frame in frames:self.core.from_gui(frame);self.core.from_engine(frame)
@@ -90,7 +136,7 @@ class GatewayTests(unittest.TestCase):
         self.core.from_engine(wire({"id":"PRIVATE_INIT_ID","result":{"private":"PRIVATE_INIT_RESULT"}}))
         expected["initialize_ok"]=True
         self.assertEqual(self.core.status()["handshake"],expected)
-        self.assertFalse(self.core.ready)
+        self.assertTrue(self.core.ready)
         self.core.from_gui(wire({"method":"initialized"}))
         expected["initialized"]=True
         status=self.core.status()
@@ -238,7 +284,7 @@ class GatewayTests(unittest.TestCase):
         self.core.from_gui(frame)
         self.assertEqual(self.engine[-1],frame)
 
-    def test_readiness_updates_when_gui_initialized_has_no_engine_reply(self):
+    def test_readiness_callback_fires_once_after_initialize_ack(self):
         changes=[];self.core.on_status=lambda:changes.append(self.core.ready)
         self.ready()
         self.assertEqual(changes,[True])

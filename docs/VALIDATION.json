@@ -8,11 +8,11 @@
   },
   "core_and_macos_fixtures": {
     "schema": "offline-core-checks/1",
-    "tests": 92,
+    "tests": 95,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "elapsed_seconds": 20.406,
+    "elapsed_seconds": 19.844,
     "external_network_attempts": 0,
     "unapproved_process_attempts": 0,
     "synthetic_app_server": true,
@@ -148,7 +148,8 @@
   "ci_regressions_fixed": [
     "Canonical filesystem aliases without permitting symlinks or junctions",
     "Canonical Unicode filename equivalence; downloaded contents still compared byte-for-byte",
-    "Inline codesign requirement syntax with mandatory deep and strict verification retained"
+    "Inline codesign requirement syntax with mandatory deep and strict verification retained",
+    "Desktop readiness follows a typed correlated successful initialize response; notification is diagnostic and malformed replies do not unlock access"
   ],
   "native_mac_ci_probe": {
     "status": "See separate Signed macOS Desktop compatibility workflow for this commit",

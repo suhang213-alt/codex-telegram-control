@@ -185,7 +185,10 @@ class GatewayCore:
 
     @property
     def ready(self):
-        return self.connected and self.initialized and self.initialize_ok and self.compatibility_check()
+        # Desktop's primary client does not send an initialized notification.
+        # The engine sets its session state before replying to initialize.
+        # Accept only the correlated successful response to Desktop's own request.
+        return self.connected and self.initialize_requested and self.initialize_ok and self.compatibility_check()
 
     def _persist(self):
         self.persist({"schema": "desktop-gateway-operations/1", "operations": self.operations})
@@ -338,7 +341,7 @@ class GatewayCore:
                     except SafeError: method = None
                     if method == "initialize" and "error" in value: self.initialize_failed = True
                     if "error" not in value:
-                        if method == "initialize": self.initialize_ok = True
+                        if method == "initialize" and isinstance(value.get("result"), dict): self.initialize_ok = True
                         self._observed_result(method, value.get("result"))
                 method, params = value.get("method"), value.get("params")
                 if isinstance(params, dict):

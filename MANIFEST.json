@@ -507,8 +507,8 @@
     },
     {
       "path": "docs/MACOS_DESKTOP.md",
-      "bytes": 13179,
-      "sha256": "e32e25029ce89d83f4984316df999dc5cbfb74a5d590b29906ce111c80a61c50"
+      "bytes": 14126,
+      "sha256": "ea9952ab61b8e4d034e5267919366e2a76ccf668360741490a1b0a8ff4c9c0e9"
     },
     {
       "path": "docs/MOBILE_ACCEPTANCE.md",
@@ -532,8 +532,8 @@
     },
     {
       "path": "docs/VALIDATION.json",
-      "bytes": 5046,
-      "sha256": "00aeb95dc8b105cefd50a60355df453d02ed04c33556ca040644752026d9c9f1"
+      "bytes": 5200,
+      "sha256": "b11d0ac80a82bce5b8562b1f527e06727433886e4a0fb08f3bbd66d471fcb878"
     },
     {
       "path": "LICENSE",
@@ -592,8 +592,8 @@
     },
     {
       "path": "scripts/native_mac_ci_probe.py",
-      "bytes": 16384,
-      "sha256": "c7de4f16841e2d3006e601c6e85b66502f0690d28e7f1d35c99bed861b1bd369"
+      "bytes": 16973,
+      "sha256": "5a8b8cb95c39ecaeb8157c4e0e1c50bb47ad2e8511fba5c37acb80cd0c82eaa3"
     },
     {
       "path": "scripts/test_offline.py",
@@ -642,8 +642,8 @@
     },
     {
       "path": "src/codex_telegram/desktop_gateway.py",
-      "bytes": 42941,
-      "sha256": "3c3b67565839fe15635bec77c9f0463763b017275f1258ba6f6ba4688e9d2e5f"
+      "bytes": 43228,
+      "sha256": "70a5cfc79ffeaf89425bacc097c76594049cdf1f1dfd57451e96c4bd9896fdb1"
     },
     {
       "path": "src/codex_telegram/desktop_rpc.py",
@@ -722,8 +722,8 @@
     },
     {
       "path": "tests/test_desktop_gateway.py",
-      "bytes": 18281,
-      "sha256": "b800673a3660050e7211e0e03f47a366f6d338beed0065c4f1023f1b226252a6"
+      "bytes": 20936,
+      "sha256": "33adf9456f101b9aeae9eda3161a77b9757505072593af9dd61f9dcafa70378e"
     },
     {
       "path": "tests/test_macos_platform.py",
