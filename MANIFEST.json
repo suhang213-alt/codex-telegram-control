@@ -41,6 +41,36 @@
       "sha256": "8da169b2fede6da361277eaa99ba434be60aad2ee08c0e41c89c4010654ce170"
     },
     {
+      "path": "Dockerfile",
+      "bytes": 1406,
+      "sha256": "a3ac6213717587a60ab61d5a5179809690da3d607970f9eb37a6a44680ba8011"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1069,
+      "sha256": "72380798af61d6131287b0dd3c8dc5345535df641002fece3a02d7ef109c5f8e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 10963,
+      "sha256": "bd81f5fecab154bf690ed8b658caa2c58a66d6579c13fe7744c8488dd3dc3c71"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 17115,
+      "sha256": "17579efc6d8b71a6aed56b794c46b0b8d11dba67d79fa6cf80b58ffc4054f1d4"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 1917,
+      "sha256": "714a24cd5ca03610574f11c2f297da2c89a6a006f77aad6854d958d772b057a3"
+    },
+    {
+      "path": "adapters/windows_desktop/README.md",
+      "bytes": 13003,
+      "sha256": "1ea5c84dbd91a541d849e0e66bb957a0ed50179fdc70af22b57f4a1357110303"
+    },
+    {
       "path": "adapters/windows_desktop/bridge/activity_watch.py",
       "bytes": 11579,
       "sha256": "5172fc8e59698b9b749c9d548fa84676b060f6c68d9ff7686c26f03c89a3ce62"
@@ -346,6 +376,11 @@
       "sha256": "6c29cdfc336a7fbd862a576cfe8c93f19af0842eaa8475efd4bfe541f7f8db35"
     },
     {
+      "path": "adapters/windows_desktop/gateway/CodexGatewayShim.cs",
+      "bytes": 7828,
+      "sha256": "011389d50f5ebdcb421c32980cec81776badd3cb2eef14e82f0875e6c6d34409"
+    },
+    {
       "path": "adapters/windows_desktop/gateway/activate.py",
       "bytes": 1760,
       "sha256": "b3906440bdaf8f7127991a6ae0182a59c25d91755333dab8d19dc9bc56d3ff99"
@@ -356,19 +391,9 @@
       "sha256": "9bda35423ee7b6a0436f814b5791913216d3d744b59e201cc1e135c65bc0d22b"
     },
     {
-      "path": "adapters/windows_desktop/gateway/CodexGatewayShim.cs",
-      "bytes": 7828,
-      "sha256": "011389d50f5ebdcb421c32980cec81776badd3cb2eef14e82f0875e6c6d34409"
-    },
-    {
       "path": "adapters/windows_desktop/gateway/read_engine_identity.py",
       "bytes": 4182,
       "sha256": "3f6c175d2b9a25b07c80ae91144c0ed23461ebc5e5a9d52dd83ca02361825c37"
-    },
-    {
-      "path": "adapters/windows_desktop/README.md",
-      "bytes": 13003,
-      "sha256": "1ea5c84dbd91a541d849e0e66bb957a0ed50179fdc70af22b57f4a1357110303"
     },
     {
       "path": "adapters/windows_desktop/requirements.txt",
@@ -516,11 +541,6 @@
       "sha256": "563316657aa5c5b6b5d50be264e24cfb5b41fddd8ad985bef615532ecc6082bb"
     },
     {
-      "path": "Dockerfile",
-      "bytes": 1406,
-      "sha256": "a3ac6213717587a60ab61d5a5179809690da3d607970f9eb37a6a44680ba8011"
-    },
-    {
       "path": "docs/DECISIONS.md",
       "bytes": 13709,
       "sha256": "81b4fbbc79ea959ee01b5560977a7bb56f0bad3ae306773ba9b5ba34b292741a"
@@ -596,9 +616,9 @@
       "sha256": "80d8fd3255c4dff0cf767883a235924a6d48245218d9a0812eda2588b3e0a89b"
     },
     {
-      "path": "LICENSE",
-      "bytes": 1069,
-      "sha256": "72380798af61d6131287b0dd3c8dc5345535df641002fece3a02d7ef109c5f8e"
+      "path": "docs/WINDOWS_SAMSUNG_DOCKER.md",
+      "bytes": 33343,
+      "sha256": "7aa66f493f78e876e26ac28ec288f838722ca02ee678e0f4a4e5310f720d7a6f"
     },
     {
       "path": "package.json",
@@ -609,11 +629,6 @@
       "path": "pyproject.toml",
       "bytes": 539,
       "sha256": "c0a1de3258ccbef1e5171375c9a0cdc8b6f4c2eebc95c3fceee13bd7a4deb743"
-    },
-    {
-      "path": "README.md",
-      "bytes": 10629,
-      "sha256": "e3d17352c183a66c1e6c911f43157e9965d6dcfadc70753f9f8ae5267e639458"
     },
     {
       "path": "scripts/build_release.py",
@@ -689,11 +704,6 @@
       "path": "scripts/verify_release.py",
       "bytes": 3036,
       "sha256": "01b255cdad4b4f66e1db3361a1d07d1e598dc87d8f4dc22f6c20d229a3e926eb"
-    },
-    {
-      "path": "SECURITY.md",
-      "bytes": 17115,
-      "sha256": "17579efc6d8b71a6aed56b794c46b0b8d11dba67d79fa6cf80b58ffc4054f1d4"
     },
     {
       "path": "src/codex_telegram/__init__.py",
@@ -859,11 +869,6 @@
       "path": "tests/test_release_security.py",
       "bytes": 1579,
       "sha256": "9f2ab7b400ef123b927102d80dfd7a5662589a1c71e4b6aa029056ea69a12150"
-    },
-    {
-      "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 1917,
-      "sha256": "714a24cd5ca03610574f11c2f297da2c89a6a006f77aad6854d958d772b057a3"
     }
   ]
 }
