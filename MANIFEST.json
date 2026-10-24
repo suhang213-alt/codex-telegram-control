@@ -592,8 +592,8 @@
     },
     {
       "path": "scripts/native_mac_ci_probe.py",
-      "bytes": 9892,
-      "sha256": "cecf31cf55d91b2423abed686a53fe29cbf619e2ef34a134f02f302d867de130"
+      "bytes": 15654,
+      "sha256": "66dda55fc30d3e5a1f1b4ab826f77d70021a92c53a90dfd212ad7571a537b98b"
     },
     {
       "path": "scripts/test_offline.py",

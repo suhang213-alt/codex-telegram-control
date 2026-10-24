@@ -13,13 +13,23 @@ import os
 from pathlib import Path
 import platform
 import plistlib
+import re
 import signal
+import stat
 import subprocess
 import sys
 import tempfile
 import time
 
 DOWNLOAD = "https://persistent.oaistatic.com/codex-app-prod/Codex.dmg"
+SAFE_REASONS = {
+    "Select a supported installed Codex Desktop bundle with identifier com.openai.codex.": "unsupported_bundle_metadata",
+    "The signed Desktop executable layout is unsupported or redirected.": "unsupported_executable_layout",
+    "Desktop signature verification failed. Reinstall the official app; signing and quarantine settings were not changed.": "signature_verification_failed",
+    "Desktop signing identity is ambiguous.": "signing_identity_ambiguous",
+    "Desktop must have the official OpenAI application and signing identity.": "signing_identity_mismatch",
+    "A macOS identity check could not run. No application was launched.": "identity_check_unavailable",
+}
 
 
 class ProbeDeadline(Exception):
@@ -31,6 +41,85 @@ def command(argv, timeout=60):
                             stderr=subprocess.PIPE, timeout=timeout, check=False)
     if result.returncode:
         raise RuntimeError("Probe subprocess failed")
+    return result
+
+
+def bundle_diagnostics(bundle, adapter):
+    """Allowlisted metadata of the downloaded app only; no profile or raw errors."""
+    bundle = bundle.resolve(strict=True)
+    result = {"bundle_name": "", "app_version": "", "metadata_bundle_id": "",
+              "main_executable_name": "", "expected_cli": {}, "main_executable": {},
+              "codesign_verify_returncode": None, "codesign_details_returncode": None,
+              "signing_identifier": "", "signing_team_id": "", "codex_candidates": [],
+              "candidate_scan_truncated": False}
+    def label(value):
+        return value if isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9 ._()+-]{1,128}", value) else ""
+    def facts(path):
+        value = {"exists": False, "within_bundle": False, "symlink": path.is_symlink(),
+                 "size": None, "mode": "", "magic_hex": ""}
+        try:
+            resolved = path.resolve(strict=True)
+            value["within_bundle"] = resolved.is_relative_to(bundle)
+            if not value["within_bundle"]: return value
+            info = path.stat()
+            value.update(exists=True, size=info.st_size, mode=oct(stat.S_IMODE(info.st_mode)))
+            if stat.S_ISREG(info.st_mode):
+                with path.open("rb") as stream: value["magic_hex"] = stream.read(4).hex()
+        except OSError:
+            pass
+        return value
+    result["bundle_name"] = label(bundle.name)
+    info_path = bundle / "Contents/Info.plist"
+    try:
+        if not info_path.is_symlink() and info_path.resolve(strict=True).is_relative_to(bundle):
+            with info_path.open("rb") as stream: body = stream.read(1024*1024+1)
+            metadata = plistlib.loads(body) if len(body) <= 1024*1024 else {}
+            result["app_version"] = label(metadata.get("CFBundleShortVersionString"))
+            result["metadata_bundle_id"] = label(metadata.get("CFBundleIdentifier"))
+            name = label(metadata.get("CFBundleExecutable"))
+            result["main_executable_name"] = name
+            if name and name not in {".", ".."}: result["main_executable"] = facts(bundle / "Contents/MacOS" / name)
+    except (OSError, ValueError, TypeError):
+        pass
+    result["expected_cli"] = facts(bundle / adapter.CLI_RESOURCE)
+    requirement = (f'identifier "{adapter.BUNDLE_ID}" and anchor apple generic '
+                   f'and certificate leaf[subject.OU] = "{adapter.TEAM_ID}"')
+    for kind, arguments in (("verify", ["--verify", "--deep", "--strict", "-R", requirement]),
+                            ("details", ["-dv", "--verbose=4"])):
+        try:
+            response = subprocess.run(["/usr/bin/codesign", *arguments, str(bundle)], stdin=subprocess.DEVNULL,
+                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30, check=False)
+            result["codesign_" + kind + "_returncode"] = response.returncode
+            if kind == "details":
+                for line in (response.stdout + b"\n" + response.stderr)[:32768].decode("utf-8", "replace").splitlines():
+                    key, separator, value = line.partition("=")
+                    if separator and key in {"Identifier", "TeamIdentifier"}:
+                        result["signing_identifier" if key == "Identifier" else "signing_team_id"] = label(value)
+        except (OSError, subprocess.SubprocessError):
+            pass
+    resources = bundle / "Contents/Resources"
+    visited = 0
+    if resources.is_dir() and not resources.is_symlink() and resources.resolve().is_relative_to(bundle):
+        pending = [(resources, 0)]
+        while pending and not result["candidate_scan_truncated"]:
+            base, depth = pending.pop()
+            with os.scandir(base) as entries:
+                for entry in entries:
+                    visited += 1
+                    if visited > 20000:
+                        result["candidate_scan_truncated"] = True
+                        break
+                    if entry.is_symlink(): continue
+                    if entry.is_dir(follow_symlinks=False):
+                        if depth < 8: pending.append((Path(entry.path), depth+1))
+                    elif entry.name == "codex" and entry.is_file(follow_symlinks=False):
+                        candidate = Path(entry.path)
+                        relative = candidate.relative_to(bundle).as_posix()
+                        if len(relative) <= 512 and all(32 <= ord(char) < 127 for char in relative):
+                            result["codex_candidates"].append(dict(relative_path=relative, **facts(candidate)))
+                            if len(result["codex_candidates"]) >= 20:
+                                result["candidate_scan_truncated"] = True
+                                break
     return result
 
 
@@ -70,7 +159,8 @@ def main():
         "runner_supported", "downloaded", "mounted", "bundle_verified", "copied_unchanged",
         "gui_session_available", "launched", "connected", "ready", "backend_desktop",
         "ambiguous", "doctor_connected", "poll_timed_out", "cleanup_complete", "passed")}
-    receipt.update(app_version="", bundle_id="", team_id="", stage="environment", error_type="")
+    receipt.update(app_version="", bundle_id="", team_id="", stage="environment", error_type="",
+                   safe_error_reason="", bundle_diagnostics={})
     if not (sys.platform == "darwin" and platform.machine() == "arm64"
             and os.environ.get("GITHUB_ACTIONS") == "true"
             and os.environ.get("RUNNER_ENVIRONMENT") == "github-hosted"):
@@ -118,6 +208,7 @@ def main():
         if len(candidates) != 1:
             raise RuntimeError("Installer has no unique supported bundle")
         receipt["stage"] = "inspect_original"
+        receipt["bundle_diagnostics"] = bundle_diagnostics(candidates[0], probe_platform)
         original = probe_platform.inspect_bundle(candidates[0])
         receipt["bundle_verified"] = True
         app = root / "Codex.app"
@@ -190,6 +281,8 @@ def main():
         receipt["error_type"] = type(error).__name__ if type(error).__name__ in {
             "SafeError", "OSError", "ValueError", "RuntimeError", "TimeoutExpired"
         } else "probe_error"
+        if type(error).__name__ == "SafeError":
+            receipt["safe_error_reason"] = SAFE_REASONS.get(str(error), "unclassified_safe_error")
     finally:
         process_clean = app_pid is None
         if app_pid is not None:
