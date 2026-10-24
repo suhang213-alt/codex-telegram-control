@@ -23,6 +23,8 @@ def main():
         os.environ["LOCALAPPDATA"]=str(Path(temporary)/"local")
         os.environ["CODEX_HOME"]=str(Path(temporary)/"codex")
         os.environ.pop("CTD_BRIDGE_BOT_TOKEN",None)
+        os.environ.pop("CTD_RELAY_KEY_FILE",None)
+        os.environ.pop("CTD_RELAY_PUBLIC_URL",None)
         for folder in ("adapter","local","codex"):(Path(temporary)/folder).mkdir()
         with patch.object(urllib.request,"urlopen",prohibited), patch.object(socket.socket,"connect",prohibited), patch.object(subprocess,"Popen",prohibited):
             suite=unittest.defaultTestLoader.discover(str(ROOT/"tests"),pattern="test_*.py")

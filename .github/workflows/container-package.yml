@@ -1,5 +1,5 @@
-name: Container package check
-on: [push, pull_request, workflow_dispatch]
+name: Container build and relay smoke
+on: [push, pull_request, workflow_dispatch, workflow_call]
 permissions:
   contents: read
 jobs:
@@ -7,14 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
       - name: Verify exact public source manifest
         run: python -B scripts/verify_release.py
+      - name: Test private setup and strict container context
+        run: python -B scripts/docker_tests.py
       - name: Build reviewed Python package in Linux container
         run: docker build --pull --target package-check --tag codex-telegram-control:package-check .
       - name: Verify installed entry points without network
         run: |
           docker run --rm --network none codex-telegram-control:package-check codex-telegram --help
           docker run --rm --network none codex-telegram-control:package-check codex-telegram-desktop --help
+      - name: Build runtime relay image
+        run: docker build --pull --target runtime --tag codex-telegram-control:runtime-smoke .
+      - name: Test runtime without network or Desktop
+        run: python -B scripts/docker_tests.py --container-smoke
+      - name: Test actual container and native host port roundtrip with fixtures
+        run: python -B scripts/docker_roundtrip.py

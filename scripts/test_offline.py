@@ -41,7 +41,7 @@ def main():
         for key in ("CODEX_TELEGRAM_HOME","CODEX_HOME","LOCALAPPDATA","APPDATA","XDG_DATA_HOME"):
             destination=temp_root/key.lower();destination.mkdir()
             os.environ[key]=str(destination)
-        for key in ("TELEGRAM_BOT_TOKEN","OPENAI_API_KEY","CODEX_API_KEY","CODEX_CLI_PATH","CODEX_THREAD_ID","CODEX_APP_TOOLS_PIPE_PATH","CODEX_MCP_NODE_PATH"):
+        for key in ("TELEGRAM_BOT_TOKEN","OPENAI_API_KEY","CODEX_API_KEY","CODEX_CLI_PATH","CODEX_THREAD_ID","CODEX_APP_TOOLS_PIPE_PATH","CODEX_MCP_NODE_PATH","CTD_RELAY_KEY_FILE","CTD_RELAY_PUBLIC_URL"):
             os.environ.pop(key,None)
         sys.addaudithook(guard)
         started=time.monotonic()

@@ -11,6 +11,7 @@ RULES={
     "private_key":re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "api_secret":re.compile(r"(?<![A-Za-z0-9])sk-(?:proj-)?[A-Za-z0-9_-]{35,}"),
     "github_secret":re.compile(r"(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,})"),
+    "docker_secret":re.compile(r"(?<![A-Za-z0-9])dckr_(?:pat|oat)_[A-Za-z0-9_-]{20,}"),
 }
 
 

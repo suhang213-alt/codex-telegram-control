@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "codex-telegram-control"
-version = "0.2.0"
+version = "0.3.0rc1"
 description = "Private Telegram control for existing macOS Codex Desktop chats and local Codex"
 requires-python = ">=3.11"
 dependencies = ["keyring>=25.6,<26"]

@@ -81,7 +81,7 @@ def login(config, home):
     env = dict(os.environ)
     env["CODEX_HOME"] = str(home / "codex")
     for key in ("TELEGRAM_BOT_TOKEN", "CODEX_CLI_PATH", "CODEX_THREAD_ID", "OPENAI_API_KEY", "CODEX_API_KEY",
-                "CODEX_APP_TOOLS_PIPE_PATH", "CODEX_MCP_NODE_PATH"):
+                "CODEX_APP_TOOLS_PIPE_PATH", "CODEX_MCP_NODE_PATH", "CTD_RELAY_KEY_FILE", "CTD_RELAY_PUBLIC_URL"):
         env.pop(key, None)
     result = subprocess.run([*resolve_command(config["codex_command"]), "login"], env=env,
                             cwd=config["workspace"], check=False)
@@ -120,7 +120,7 @@ def doctor(config, home, protocol=False):
         pass
     env = dict(os.environ, CODEX_HOME=str(home / "codex"))
     for key in ("TELEGRAM_BOT_TOKEN", "CODEX_CLI_PATH", "CODEX_THREAD_ID", "OPENAI_API_KEY", "CODEX_API_KEY",
-                "CODEX_APP_TOOLS_PIPE_PATH", "CODEX_MCP_NODE_PATH"):
+                "CODEX_APP_TOOLS_PIPE_PATH", "CODEX_MCP_NODE_PATH", "CTD_RELAY_KEY_FILE", "CTD_RELAY_PUBLIC_URL"):
         env.pop(key, None)
     result = subprocess.run([*command, "--version"], env=env, capture_output=True, timeout=15, check=False)
     if result.returncode == 0:

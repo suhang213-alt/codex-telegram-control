@@ -1,0 +1,93 @@
+name: Publish reviewed Docker image
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Explicit version tag, for example v0.3.0-candidate'
+        required: true
+        type: string
+      publish:
+        description: 'Push the tested image to the configured Docker Hub namespace'
+        required: true
+        default: false
+        type: boolean
+permissions:
+  contents: read
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  source-checks:
+    uses: ./.github/workflows/check.yml
+  native-macos:
+    uses: ./.github/workflows/native-mac.yml
+  container-checks:
+    uses: ./.github/workflows/container-package.yml
+  publish:
+    needs: [source-checks, native-macos, container-checks]
+    if: github.event_name == 'push' || inputs.publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+      REQUESTED_TAG: ${{ inputs.image_tag }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Validate release metadata
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$DOCKERHUB_USERNAME" =~ ^[a-z0-9][a-z0-9_-]{2,38}$ ]]; then
+            echo 'Configure the public DOCKERHUB_USERNAME repository variable.' >&2
+            exit 1
+          fi
+          if [[ "$GITHUB_REF_TYPE" == tag ]]; then
+            image_tag="$GITHUB_REF_NAME"
+          else
+            image_tag="$REQUESTED_TAG"
+          fi
+          if [[ ! "$image_tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9][a-z0-9.-]*)?$ ]]; then
+            echo 'Use an explicit version, such as v0.3.0-candidate.' >&2
+            exit 1
+          fi
+          echo "tag=$image_tag" >> "$GITHUB_OUTPUT"
+          echo "image=$DOCKERHUB_USERNAME/codex-telegram-control" >> "$GITHUB_OUTPUT"
+          python -B scripts/verify_release.py
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+        with:
+          platforms: arm64
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        id: build
+        with:
+          context: .
+          target: runtime
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ steps.release.outputs.image }}:${{ steps.release.outputs.tag }}
+            ${{ steps.release.outputs.image }}:sha-${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ steps.release.outputs.tag }}
+          provenance: mode=max
+          sbom: true
+      - name: Verify the published manifest
+        env:
+          IMAGE: ${{ steps.release.outputs.image }}
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          docker buildx imagetools inspect "$IMAGE@$DIGEST" --raw > /tmp/published-manifest.json
+          python -c "import json; m=json.load(open('/tmp/published-manifest.json')); p={(x.get('platform',{}).get('os'), x.get('platform',{}).get('architecture')) for x in m.get('manifests',[])}; assert {('linux','amd64'),('linux','arm64')} <= p, 'Published manifest is missing a required platform'; print('Required platforms verified: linux/amd64, linux/arm64')"
+          printf 'Published immutable reference: `%s@%s`\n' "$IMAGE" "$DIGEST" >> "$GITHUB_STEP_SUMMARY"

@@ -20,6 +20,9 @@ class Telegram:
         self.last_error = None
 
     def call(self, method, data=None, timeout=40):
+        from . import relay_client
+        if relay_client.enabled():
+            return relay_client.current().telegram(method, data or {})
         request = urllib.request.Request("https://api.telegram.org/bot" + self._token + "/" + method,
                     data=json.dumps(data or {}).encode(), headers={"Content-Type": "application/json"})
         try:
@@ -41,6 +44,9 @@ class Telegram:
     def send_document(self, name, content):
         if not re.fullmatch(r"[^\r\n\"\\/]{1,120}", name):
             raise SafeError("Unsafe export name.")
+        from . import relay_client
+        if relay_client.enabled():
+            return relay_client.current().document(name, content)
         boundary = "----ctc" + secrets.token_hex(16)
         body = (f"--{boundary}\r\nContent-Disposition: form-data; name=\"chat_id\"\r\n\r\n{self.owner_id}\r\n"
                 f"--{boundary}\r\nContent-Disposition: form-data; name=\"document\"; filename=\"{name}\"\r\n"

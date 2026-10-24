@@ -10,10 +10,15 @@
 !src/codex_telegram/desktop_controller.py
 !src/codex_telegram/desktop_gateway.py
 !src/codex_telegram/desktop_rpc.py
+!src/codex_telegram/host_connector.py
+!src/codex_telegram/host_secrets.py
 !src/codex_telegram/macos_cli.py
 !src/codex_telegram/macos_platform.py
 !src/codex_telegram/progress.py
 !src/codex_telegram/rpc.py
+!src/codex_telegram/relay_server.py
+!src/codex_telegram/relay_client.py
+!src/codex_telegram/relay_protocol.py
 !src/codex_telegram/security.py
 !src/codex_telegram/server.py
 !src/codex_telegram/telegram.py

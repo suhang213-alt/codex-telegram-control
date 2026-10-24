@@ -1,14 +1,14 @@
 {
   "schema": "public-release-manifest/1",
   "project": "codex-telegram-control",
-  "version": "0.2.0",
+  "version": "0.3.0rc1",
   "release_status": "candidate",
   "prepared_on": "2026-10-24",
   "files": [
     {
       "path": ".dockerignore",
-      "bytes": 678,
-      "sha256": "8972cd58bb6ffc2212f5eee3073381bfb3d47c1981408623a51bba0bc9d9926e"
+      "bytes": 862,
+      "sha256": "dd9aada61a916e83c44b29b817012c8f12706a584961057020d05442284909d1"
     },
     {
       "path": ".gitattributes",
@@ -17,18 +17,23 @@
     },
     {
       "path": ".github/workflows/check.yml",
-      "bytes": 1635,
-      "sha256": "8eb16675b7b6b149c5c149bef3bf99995c1ed91e5bfe63e4ac7ff20b09f23cc7"
+      "bytes": 2061,
+      "sha256": "20dcb7aa48e774fe42cec6c316f20b58329c77915118ea134e644d5133248d03"
     },
     {
       "path": ".github/workflows/container-package.yml",
-      "bytes": 820,
-      "sha256": "7d0d162e7d4ca2feb9786bcc7a1cf39b7a36dd59cd8284d668ee2e64ed86f5f7"
+      "bytes": 1381,
+      "sha256": "02b7bc55d27c6db4f132ac43731183608a5ea7018b2acfc4160079b9976e7e38"
+    },
+    {
+      "path": ".github/workflows/docker-publish.yml",
+      "bytes": 3871,
+      "sha256": "2b60b5aff27cdcb04199edeca3ed7f9cc1cdc6aae4b6adb3cbfe0fbaadb4753a"
     },
     {
       "path": ".github/workflows/native-mac.yml",
-      "bytes": 768,
-      "sha256": "f14e3cc757b52dcb473245e65c92c3022fb44b7d764051b396aa06fd27491d4b"
+      "bytes": 912,
+      "sha256": "dc78ed32bb547d3a973ae976f124945d3d90719f6388579aa72148f90c3a9ce3"
     },
     {
       "path": ".gitignore",
@@ -302,13 +307,13 @@
     },
     {
       "path": "adapters/windows_desktop/bridge/telegram_bridge.py",
-      "bytes": 88017,
-      "sha256": "41473081ef8cda23df7b88fc9819e1359c92430bb61fccdc298f31c01de38b0e"
+      "bytes": 89899,
+      "sha256": "aff37d7a643bc1aecddb34b69bd033736ef330e0e90ce711005f11b75f57ec87"
     },
     {
       "path": "adapters/windows_desktop/bridge/telegram_webhook_cli.py",
-      "bytes": 13498,
-      "sha256": "04bdb4e67c2e2c264d5a635e0bda20d76577c2cdc7ca1666ac6119bff01443f9"
+      "bytes": 13602,
+      "sha256": "7c3de94d264d5a3144ba1e4aab7463a076e4b5dea97ddee22554d3fb56c81d69"
     },
     {
       "path": "adapters/windows_desktop/bridge/transcribe_voice.py",
@@ -397,8 +402,8 @@
     },
     {
       "path": "adapters/windows_desktop/scripts/test_offline.py",
-      "bytes": 1333,
-      "sha256": "3dd1612fb7b30f37fa620865299fdbd9fca4d4bcce977b506b18e93412f9a894"
+      "bytes": 1435,
+      "sha256": "5fe1a7fd93d1f68c26a63fa55e1510243e572aa9209f9bfa68f7685b179e8490"
     },
     {
       "path": "adapters/windows_desktop/scripts/uninstall.py",
@@ -481,6 +486,11 @@
       "sha256": "a7abd1095d6c548329fb767e6502cc2ba836f36b3b167252bc9787ed0209ecd3"
     },
     {
+      "path": "adapters/windows_desktop/tests/test_relay_hooks.py",
+      "bytes": 4071,
+      "sha256": "81ff936a8ba7166f93f1b2ec533efb6136ec2856ac00ed9968964fb1831c50a7"
+    },
+    {
       "path": "adapters/windows_desktop/tests/test_stage_progress.py",
       "bytes": 7686,
       "sha256": "74aabe65381aad4d5e0e359918d474c20c9d47dba4b0de495b80b3604a89acc1"
@@ -491,14 +501,24 @@
       "sha256": "9b8f6e6954d75871432b3ffe78a068634c187d0c44282f9f5b37348b0a8c8847"
     },
     {
+      "path": "compose.local.yml",
+      "bytes": 211,
+      "sha256": "f9e85c382406d84a37d224a0a2a8898f55badb01e72a54d8c1521849cff00e97"
+    },
+    {
+      "path": "compose.yml",
+      "bytes": 2298,
+      "sha256": "974293e41cdd06dfad61eb7b5f67d5ab9c4cf443d272ff6ed162732529e9f695"
+    },
+    {
       "path": "config.example.json",
       "bytes": 218,
       "sha256": "563316657aa5c5b6b5d50be264e24cfb5b41fddd8ad985bef615532ecc6082bb"
     },
     {
       "path": "Dockerfile",
-      "bytes": 556,
-      "sha256": "66e1b1746c116cf192dd1a38c44c3222e1565411e52c885b3a753221dcaa365d"
+      "bytes": 1406,
+      "sha256": "a3ac6213717587a60ab61d5a5179809690da3d607970f9eb37a6a44680ba8011"
     },
     {
       "path": "docs/DECISIONS.md",
@@ -511,9 +531,14 @@
       "sha256": "57ada55749377e9f673077bc412fa45ecc027799135f70c711c9b9c321853039"
     },
     {
+      "path": "docs/DOCKER.md",
+      "bytes": 16027,
+      "sha256": "af394ccf3666a29bf10943018f86ceabc94478ec3f94ee967a8dc2909818656e"
+    },
+    {
       "path": "docs/DOCKER_STATUS.md",
-      "bytes": 3453,
-      "sha256": "c1df0c14bf3030be9b689e7d0695ff5c9c6465c0c9cf5a4a367f42492f302658"
+      "bytes": 4406,
+      "sha256": "37043c0b6bee8e11f0faba6d9ee846d98c3671cfea3de4f1e0eda1cff140c22b"
     },
     {
       "path": "docs/INSTALL_MACOS.md",
@@ -542,16 +567,31 @@
     },
     {
       "path": "docs/QUICK_START.md",
+      "bytes": 5700,
+      "sha256": "92e046bd33fe26ae9aac7c5a2ee2c4f03eeea5d1406e441f9ea6b4dcd8c096f6"
+    },
+    {
+      "path": "docs/QUICK_START_NATIVE.md",
       "bytes": 8529,
       "sha256": "8aba3d12d092fb203be1d4fd38b92f14db6bdb0dfbf155152ef91cec48da744f"
     },
     {
       "path": "docs/RELEASE.md",
+      "bytes": 6833,
+      "sha256": "714bbd8fd7a918d763b7ae5c7806e1fa007537d824d9e468bd9d2e4e965f1355"
+    },
+    {
+      "path": "docs/RELEASE_0.2.md",
       "bytes": 10416,
       "sha256": "e2bbbe504fb357baf4314b9322abf114fd48e883eeb75923060546b4dc103ba8"
     },
     {
       "path": "docs/VALIDATION.json",
+      "bytes": 1473,
+      "sha256": "6067f26bb6d01c9d639be143a720b998a319a72ff89b2ddbac2223021ae31391"
+    },
+    {
+      "path": "docs/VALIDATION_0.2.json",
       "bytes": 5725,
       "sha256": "80d8fd3255c4dff0cf767883a235924a6d48245218d9a0812eda2588b3e0a89b"
     },
@@ -567,23 +607,48 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 536,
-      "sha256": "2b927b233fa82e9fb757f1cdbc88de1172ae6c25a7a22a41461c093031ef7828"
+      "bytes": 539,
+      "sha256": "c0a1de3258ccbef1e5171375c9a0cdc8b6f4c2eebc95c3fceee13bd7a4deb743"
     },
     {
       "path": "README.md",
-      "bytes": 10110,
-      "sha256": "515a4288d3d1a821f88075f47425f5fb14041e6c677b51951ef3514f3fa23ace"
+      "bytes": 10629,
+      "sha256": "e3d17352c183a66c1e6c911f43157e9965d6dcfadc70753f9f8ae5267e639458"
     },
     {
       "path": "scripts/build_release.py",
-      "bytes": 1912,
-      "sha256": "0b95eaedcd19f84e77df10ddc7cc938a25a1d2485fc9414d4bbd5491217f2399"
+      "bytes": 2195,
+      "sha256": "494518eca6c799fadc0ea9cdeb268426dde7b287f543ebb4670511f2307feb60"
     },
     {
       "path": "scripts/configure.py",
       "bytes": 1661,
       "sha256": "d9ef48c13b94c433dbe9092dfac586ab80c5efab1402f45565c9c5a7582da712"
+    },
+    {
+      "path": "scripts/docker-install.command",
+      "bytes": 816,
+      "sha256": "8111552da691965c511446711cef134ca3013faf2d1e9445c53a3aa7c15313a8"
+    },
+    {
+      "path": "scripts/docker-install.ps1",
+      "bytes": 887,
+      "sha256": "541f2145b1620e0677f9bf4feceb530589eeb9dc02f7ebaba710de3f725e6f5b"
+    },
+    {
+      "path": "scripts/docker.py",
+      "bytes": 20765,
+      "sha256": "b20d0f1b85a2395bb323c2ab3c293260234d276fb7e3426bb1898ae926fb66a2"
+    },
+    {
+      "path": "scripts/docker_roundtrip.py",
+      "bytes": 10364,
+      "sha256": "ba22b2ed513afa3a0dc7a2282cdcf4d791b73f111e4058faf2e24a80f1bb0f8d"
+    },
+    {
+      "path": "scripts/docker_tests.py",
+      "bytes": 14048,
+      "sha256": "98b148ca12d94a1f87f5b9fb5437262febc0a83bc625e1692c84f3f2b3bca25d"
     },
     {
       "path": "scripts/identify-owner.py",
@@ -617,13 +682,13 @@
     },
     {
       "path": "scripts/test_offline.py",
-      "bytes": 3171,
-      "sha256": "cd567afbd7e795714af806a97420a92cb5bd0caaf75c8e54421438754a5aa59a"
+      "bytes": 3215,
+      "sha256": "19e85c8f9e04e91ff770600fdb7e807f66e01b043a96fea427f8e47dce95a741"
     },
     {
       "path": "scripts/verify_release.py",
-      "bytes": 2948,
-      "sha256": "508d128f6ba64bb94fcf367b05830b385e153aea37792e8c5e25f1394983d208"
+      "bytes": 3036,
+      "sha256": "01b255cdad4b4f66e1db3361a1d07d1e598dc87d8f4dc22f6c20d229a3e926eb"
     },
     {
       "path": "SECURITY.md",
@@ -632,8 +697,8 @@
     },
     {
       "path": "src/codex_telegram/__init__.py",
-      "bytes": 102,
-      "sha256": "5595438f002a79ed25f34571def9fbede7ad1f3c8929bec4c39fcdd423959f97"
+      "bytes": 105,
+      "sha256": "b0813ec2838a24327b4211ac0fdce5a7cef4c5137cef2373861a6f1d70855534"
     },
     {
       "path": "src/codex_telegram/__main__.py",
@@ -642,8 +707,8 @@
     },
     {
       "path": "src/codex_telegram/cli.py",
-      "bytes": 9838,
-      "sha256": "d60ca338dcd63f368c105cc05d5dff69e3a1ee48a802eb24dec3111e478f0b89"
+      "bytes": 9930,
+      "sha256": "791daa8d147048ad70952c045ce5c663a1ba93e5e0dfe22e023aac69627e0cdc"
     },
     {
       "path": "src/codex_telegram/config.py",
@@ -657,8 +722,8 @@
     },
     {
       "path": "src/codex_telegram/desktop_controller.py",
-      "bytes": 8091,
-      "sha256": "87674d26b22cfc58ae343210cf8f32fae8ffaffaac9f5b9883b73a78a608e25a"
+      "bytes": 8450,
+      "sha256": "fb7ef7e9e2029d23064173d5eafa09424c381499cdf7b4d7c30763e6e5315e06"
     },
     {
       "path": "src/codex_telegram/desktop_gateway.py",
@@ -669,6 +734,16 @@
       "path": "src/codex_telegram/desktop_rpc.py",
       "bytes": 7796,
       "sha256": "f839144bfc2e1569624fadb372c055f08e21228443b82f3e2d6cae4104ebaff3"
+    },
+    {
+      "path": "src/codex_telegram/host_connector.py",
+      "bytes": 3681,
+      "sha256": "e262022ee23580277bf187596365e42a8eee31030c345c5679b07ed0b6574cb5"
+    },
+    {
+      "path": "src/codex_telegram/host_secrets.py",
+      "bytes": 4945,
+      "sha256": "479ee515ed142a84cd4c31343ccdc5d15522f6e851631dc8f3bdf5892ac14c84"
     },
     {
       "path": "src/codex_telegram/macos_cli.py",
@@ -686,9 +761,24 @@
       "sha256": "a756533bea2221db576771333f6b8957fb4bdb07f457be7ba187675d19cb9e13"
     },
     {
+      "path": "src/codex_telegram/relay_client.py",
+      "bytes": 5248,
+      "sha256": "15db7e4723fec05427989be7d8feec4f25bc7d072690379913a20f7c9c2303f6"
+    },
+    {
+      "path": "src/codex_telegram/relay_protocol.py",
+      "bytes": 7875,
+      "sha256": "f0f323e751d3d49641bae0ebc2dcbeed62c8e41a998071d28f9d8c17ba027076"
+    },
+    {
+      "path": "src/codex_telegram/relay_server.py",
+      "bytes": 21545,
+      "sha256": "8b1e34cb48eedb1026badfdc26d4e7e5a5594f9993c50ec12c950c3d93787377"
+    },
+    {
       "path": "src/codex_telegram/rpc.py",
-      "bytes": 4782,
-      "sha256": "701ec4a3197392e8555d4c17d154575fda491900d4041cdb795216cf5e273909"
+      "bytes": 4858,
+      "sha256": "0e3e78de5c99b07e0ec2fb6955c51a5adbc141f6d955fa62c90313024d9b002f"
     },
     {
       "path": "src/codex_telegram/security.py",
@@ -717,8 +807,8 @@
     },
     {
       "path": "src/codex_telegram/telegram.py",
-      "bytes": 9990,
-      "sha256": "a4b4ce0e79e17255457274379cb08c40699dde85c8bf2b2e7d052a6f145cc057"
+      "bytes": 10267,
+      "sha256": "249bc3ce54536d909beefff2f1425483a33dc2685414d78706f09aab7f6794da"
     },
     {
       "path": "tests/fake_app_server.py",
@@ -732,8 +822,8 @@
     },
     {
       "path": "tests/test_core.py",
-      "bytes": 22941,
-      "sha256": "d9d17f863325f2a205b2e6987ce9651345ad5bfa2c3ff9852747364256390825"
+      "bytes": 22985,
+      "sha256": "48ea17821aa414416a8338ed07e7f5121373af74496f505538ebc16290a9d9c1"
     },
     {
       "path": "tests/test_desktop_controller.py",
@@ -746,9 +836,29 @@
       "sha256": "33adf9456f101b9aeae9eda3161a77b9757505072593af9dd61f9dcafa70378e"
     },
     {
+      "path": "tests/test_host_secrets.py",
+      "bytes": 4508,
+      "sha256": "dc3dc6c491e274517dbfbf8f47de94e7b3ea00722bf08be9fa6595dde5159137"
+    },
+    {
       "path": "tests/test_macos_platform.py",
       "bytes": 16462,
       "sha256": "cd6e04387b42594a170407e2186f777a7e82f3abf869ed1a748e03a6b0fe67e4"
+    },
+    {
+      "path": "tests/test_relay_integration.py",
+      "bytes": 9111,
+      "sha256": "c1dad3fbb785c51666033c1910a384647e4ef85430a56270e2d21151bfe97f40"
+    },
+    {
+      "path": "tests/test_relay_security.py",
+      "bytes": 24160,
+      "sha256": "72737d90012d324f6fa55e80e3d69523b533b73e3c66e6798805b6db3c38a599"
+    },
+    {
+      "path": "tests/test_release_security.py",
+      "bytes": 1579,
+      "sha256": "9f2ab7b400ef123b927102d80dfd7a5662589a1c71e4b6aa029056ea69a12150"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",

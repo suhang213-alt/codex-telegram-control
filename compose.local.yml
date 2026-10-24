@@ -1,0 +1,8 @@
+# Optional loopback-only inspection; never exposes the host connector port publicly.
+services:
+  relay:
+    ports:
+      - target: 8787
+        published: "8789"
+        host_ip: 127.0.0.1
+        protocol: tcp

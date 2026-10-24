@@ -6,6 +6,7 @@ import queue
 import subprocess
 import threading
 from .config import SafeError
+from . import __version__
 
 
 class Rpc:
@@ -18,7 +19,7 @@ class Rpc:
         env = dict(os.environ)
         # Bot credentials and parent gateway overrides never reach the model process.
         for key in ("TELEGRAM_BOT_TOKEN", "CODEX_CLI_PATH", "CODEX_THREAD_ID", "OPENAI_API_KEY", "CODEX_API_KEY",
-                    "CODEX_APP_TOOLS_PIPE_PATH", "CODEX_MCP_NODE_PATH"):
+                    "CODEX_APP_TOOLS_PIPE_PATH", "CODEX_MCP_NODE_PATH", "CTD_RELAY_KEY_FILE", "CTD_RELAY_PUBLIC_URL"):
             env.pop(key, None)
         env["CODEX_HOME"] = str(codex_home)
         self.process = subprocess.Popen(command, cwd=cwd, env=env, stdin=subprocess.PIPE,
@@ -28,7 +29,7 @@ class Rpc:
         self.reader.start()
         try:
             self.call("initialize", {"clientInfo": {"name": "codex_telegram_control",
-                        "title": "Telegram Control", "version": "0.2.0"},
+                        "title": "Telegram Control", "version": __version__},
                         "capabilities": {"experimentalApi": False}}, timeout=20)
             self.send({"method": "initialized", "params": {}})
         except Exception:

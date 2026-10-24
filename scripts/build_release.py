@@ -3,6 +3,7 @@ import argparse
 import hashlib
 from pathlib import Path
 import sys
+import tomllib
 import zipfile
 from verify_release import verify
 
@@ -12,6 +13,10 @@ def main():
     parser.add_argument("--output",required=True,help="Destination ZIP outside this repository")
     args=parser.parse_args()
     root=Path(__file__).resolve().parents[1]
+    version=tomllib.loads((root/"pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+    import re
+    if not isinstance(version,str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,60}",version):
+        parser.error("Unsafe release version")
     destination=Path(args.output).expanduser().resolve()
     if destination.is_relative_to(root) or destination.suffix.lower()!=".zip" or destination.exists():
         parser.error("Use a new .zip path outside the repository")
@@ -23,7 +28,7 @@ def main():
     files=[x["path"] for x in manifest["files"]]+["MANIFEST.json"]
     with zipfile.ZipFile(destination,"x",compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
         for relative in sorted(files):
-            info=zipfile.ZipInfo("codex-telegram-control-0.2.0/"+relative,date_time=(2026,10,24,0,0,0))
+            info=zipfile.ZipInfo("codex-telegram-control-"+version+"/"+relative,date_time=(2026,10,24,0,0,0))
             info.create_system=3
             mode=0o100755 if relative.endswith((".sh",".command")) else 0o100644
             info.external_attr=mode<<16

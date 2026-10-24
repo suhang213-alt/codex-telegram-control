@@ -207,6 +207,9 @@ def token() -> str:
 
 
 def api(method: str, payload: dict, *, timeout: int = 40) -> dict:
+    if "CTD_RELAY_KEY_FILE" in os.environ:
+        from codex_telegram.relay_client import current
+        return current().telegram(method, payload)
     url = "https://api.telegram.org/bot" + token() + "/" + method
     request = urllib.request.Request(
         url,
@@ -840,11 +843,17 @@ def transcribe_voice(file_id: str) -> str:
     url = "https://api.telegram.org/file/bot" + token() + "/" + urllib.parse.quote(file_path, safe="/")
     with tempfile.TemporaryDirectory(prefix="telegram_voice_") as folder:
         audio_path = Path(folder) / "voice.ogg"
-        with urllib.request.urlopen(url, timeout=60) as response, audio_path.open("wb") as output:
-            while chunk := response.read(65536):
-                output.write(chunk)
-                if output.tell() > 20_000_000:
-                    raise ValueError("Voice file too large")
+        if "CTD_RELAY_KEY_FILE" in os.environ:
+            from codex_telegram.relay_client import current
+            content = current().download(file_path)
+            if len(content) > 20_000_000: raise ValueError("Voice file too large")
+            audio_path.write_bytes(content)
+        else:
+            with urllib.request.urlopen(url, timeout=60) as response, audio_path.open("wb") as output:
+                while chunk := response.read(65536):
+                    output.write(chunk)
+                    if output.tell() > 20_000_000:
+                        raise ValueError("Voice file too large")
         result = subprocess.run(
             [str(ASR_PYTHON), str(Path(__file__).with_name("transcribe_voice.py")), str(ASR_MODEL), str(audio_path)],
             capture_output=True, timeout=240, check=True, encoding="utf-8", errors="replace",
@@ -862,6 +871,11 @@ def download_attachment(file_id: str, file_name: str) -> dict:
     file_path = info.get("file_path")
     if not isinstance(file_path, str) or not re.fullmatch(r"[A-Za-z0-9_./-]{1,300}", file_path) or ".." in file_path.split("/"):
         raise ValueError("Invalid Telegram attachment path")
+    if "CTD_RELAY_KEY_FILE" in os.environ:
+        from codex_telegram.relay_client import current
+        content = current().download(file_path)
+        if len(content) > 20_000_000: raise ValueError("Attachment too large")
+        return store_file(file_name, content)
     url = "https://api.telegram.org/file/bot" + token() + "/" + urllib.parse.quote(file_path, safe="/")
     chunks = []
     size = 0
@@ -1391,7 +1405,13 @@ def reply_payload(payload: dict) -> None:
 def run() -> None:
     global _RESPONSE_OBSERVER, _ACTIVITY_OBSERVER
     config.validate(config.settings())
-    token()
+    bot_token = token()
+    relay_mode = "CTD_RELAY_KEY_FILE" in os.environ
+    if relay_mode:
+        if cloud_transport_enabled(): raise RuntimeError("Disable the previous cloud transport before starting Docker mode")
+        from codex_telegram import relay_client
+        public_url = relay_client.public_origin(os.environ.get("CTD_RELAY_PUBLIC_URL", ""))
+        connector = relay_client.start(bot_token, config.owner_user_id(), public_url, "windows")
     current = state()
     # The existing user-logon task also starts the verified installed Desktop.
     # The helper reserves one attempt per Windows logon, never a chat prompt.
@@ -1435,6 +1455,7 @@ def run() -> None:
         pass
     from miniapp_server import serve, supervise_tunnel
     serve()
+    if relay_mode: connector.start()
     try:
         from background_service import start_background as start_native_background
         started = start_native_background(sys.modules[__name__])
@@ -1464,11 +1485,20 @@ def run() -> None:
     except Exception:
         # Durable commands remain queued. No service-chat fallback.
         pass
-    threading.Thread(target=supervise_tunnel, daemon=True, name="TelegramTunnel").start()
+    if relay_mode:
+        # The Docker tunnel owns the public ingress; retain the host's encrypted
+        # menu/status storage and owner checks without starting a second tunnel.
+        from miniapp_server import write_tunnel_status
+        write_tunnel_status({"url": public_url, "healthy": relay_client.current().backend_ready, "provider": "docker", "at": int(time.time())})
+    else:
+        threading.Thread(target=supervise_tunnel, daemon=True, name="TelegramTunnel").start()
     if sys.stdout is not None:
         print("Telegram bridge running", flush=True)
     while True:
         try:
+            if relay_mode:
+                client = relay_client.current()  # Fail closed after lost lease; no direct fallback.
+                write_tunnel_status({"url": public_url, "healthy": client.backend_ready, "provider": "docker", "at": int(time.time())})
             if _ACTIVITY_OBSERVER is not None:
                 _ACTIVITY_OBSERVER.sync()
             voice_pending()

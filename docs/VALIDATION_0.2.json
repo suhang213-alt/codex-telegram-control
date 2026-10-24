@@ -1,0 +1,187 @@
+{
+  "schema": "public-validation/1",
+  "version": "0.2.0",
+  "date": "2026-10-24",
+  "local_environment": {
+    "os": "Windows x64",
+    "python": "3.12.14"
+  },
+  "core_and_macos_fixtures": {
+    "schema": "offline-core-checks/1",
+    "tests": 95,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 19.844,
+    "external_network_attempts": 0,
+    "unapproved_process_attempts": 0,
+    "synthetic_app_server": true,
+    "live_telegram": false,
+    "live_inference": false,
+    "passed": true
+  },
+  "windows_adapter": {
+    "tests": 291,
+    "skipped": 0,
+    "passed": true,
+    "runner_seconds": 21.78,
+    "network_attempt_counter": "not instrumented",
+    "network_policy": "Runner blocks urllib.urlopen and socket.connect; Popen prohibited; fixture multiprocessing allowed.",
+    "live_telegram": false,
+    "live_model": false
+  },
+  "mobile_desktop": {
+    "schema": "mobile-ui-emulation/1",
+    "real_hardware": false,
+    "live_telegram": false,
+    "codex_process_started": false,
+    "external_network_used": false,
+    "cases": [
+      {
+        "profile": "android-compact",
+        "viewport": "360x780",
+        "keyboard_viewport": "360x390",
+        "engine": "chromium",
+        "browser_channel": "msedge",
+        "browser_version": "156.0.4314.42",
+        "checks": [
+          "initial-layout",
+          "hostile-content-rendered-as-text",
+          "existing-desktop-mode-and-original-id",
+          "long-history-scroll",
+          "keyboard-resize",
+          "input-and-send-visible",
+          "history-remains-visible",
+          "single-exact-text-send",
+          "custom-decision-text",
+          "nonreviewable-approval-disabled",
+          "explicit-decline",
+          "submitted-decision-disabled",
+          "model-and-effort-controls",
+          "file-name-safety",
+          "unicode-download-original-bytes",
+          "chat-state-isolation",
+          "no-page-errors",
+          "no-external-network"
+        ],
+        "status": "pass"
+      },
+      {
+        "profile": "android-wide",
+        "viewport": "412x915",
+        "keyboard_viewport": "412x430",
+        "engine": "chromium",
+        "browser_channel": "msedge",
+        "browser_version": "156.0.4314.42",
+        "checks": [
+          "initial-layout",
+          "hostile-content-rendered-as-text",
+          "existing-desktop-mode-and-original-id",
+          "long-history-scroll",
+          "keyboard-resize",
+          "input-and-send-visible",
+          "history-remains-visible",
+          "single-exact-text-send",
+          "custom-decision-text",
+          "nonreviewable-approval-disabled",
+          "explicit-decline",
+          "submitted-decision-disabled",
+          "model-and-effort-controls",
+          "file-name-safety",
+          "unicode-download-original-bytes",
+          "chat-state-isolation",
+          "no-page-errors",
+          "no-external-network"
+        ],
+        "status": "pass"
+      },
+      {
+        "profile": "ios-size",
+        "viewport": "390x844",
+        "keyboard_viewport": "390x400",
+        "engine": "chromium",
+        "browser_channel": "msedge",
+        "browser_version": "156.0.4314.42",
+        "checks": [
+          "initial-layout",
+          "hostile-content-rendered-as-text",
+          "existing-desktop-mode-and-original-id",
+          "long-history-scroll",
+          "keyboard-resize",
+          "input-and-send-visible",
+          "history-remains-visible",
+          "single-exact-text-send",
+          "custom-decision-text",
+          "nonreviewable-approval-disabled",
+          "explicit-decline",
+          "submitted-decision-disabled",
+          "model-and-effort-controls",
+          "file-name-safety",
+          "unicode-download-original-bytes",
+          "chat-state-isolation",
+          "no-page-errors",
+          "no-external-network"
+        ],
+        "status": "pass"
+      }
+    ],
+    "status": "pass",
+    "elapsed_seconds": 25.017
+  },
+  "packaging": {
+    "checks": 13,
+    "passed": true,
+    "clean_venv": true,
+    "downloaded_dependencies": false,
+    "keychain_tested": false
+  },
+  "github_actions": {
+    "source_commit": "2399edf40af8cdd444754c0f908446733c15ccae",
+    "offline_run_id": 40109078199,
+    "jobs": 12,
+    "all_passed": true,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "python": [
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "mobile_engines": [
+      "Chromium",
+      "WebKit"
+    ]
+  },
+  "not_run": [
+    "Authorized existing Desktop chats and model turns on a real user Mac",
+    "Real Telegram bot and Mac/Samsung end-to-end acceptance",
+    "Real Android/iOS WebView",
+    "Apple Silicon and Intel hardware acceptance",
+    "Keychain with a real bot token",
+    "Desktop sleep and update compatibility"
+  ],
+  "release_status": "candidate",
+  "ci_regressions_fixed": [
+    "Canonical filesystem aliases without permitting symlinks or junctions",
+    "Canonical Unicode filename equivalence; downloaded contents still compared byte-for-byte",
+    "Inline codesign requirement syntax with mandatory deep and strict verification retained",
+    "Desktop readiness follows a typed correlated successful initialize response; notification is diagnostic and malformed replies do not unlock access"
+  ],
+  "native_mac_ci_probe": {
+    "source_commit": "2399edf40af8cdd444754c0f908446733c15ccae",
+    "run_id": 40109078142,
+    "os": "macOS 26 ARM64 GitHub-hosted runner",
+    "app_version": "26.1021.31345",
+    "signed_app": true,
+    "original_desktop_engine": true,
+    "doctor_connected": true,
+    "read_only_rpc_verified": true,
+    "passed": true,
+    "account_login": false,
+    "model_turn": false,
+    "real_phone": false
+  }
+}

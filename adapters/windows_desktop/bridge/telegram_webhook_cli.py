@@ -16,6 +16,7 @@ after input validation and its value is used in memory for Telegram requests.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -91,6 +92,8 @@ def read_configuration(stream, approved_url):
 
 
 def telegram_request(token_value, method, payload, open_request):
+    if "CTD_RELAY_KEY_FILE" in os.environ:
+        raise WebhookCliError("invalid_operation")
     if method not in {"getWebhookInfo", "setWebhook", "deleteWebhook", "setChatMenuButton", "getChatMenuButton", "setMyCommands", "getMyCommands"}:
         raise WebhookCliError("invalid_operation")
     request = urllib.request.Request(

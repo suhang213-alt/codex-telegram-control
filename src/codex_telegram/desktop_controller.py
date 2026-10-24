@@ -122,11 +122,16 @@ def run(config,home):
     from .cli import InstanceLock
     from .server import Server,handler_factory
     from .telegram import Telegram
+    from . import relay_client
     secret=token(home);lock=InstanceLock(home);control=server=telegram=None
     try:
         control=DesktopController(config,home)
+        if relay_client.enabled():
+            if config["port"] != 8787: raise SafeError("Docker host adapter requires local port 8787.")
         telegram=Telegram(secret,config["owner_id"],config["public_url"],control)
         server=Server(("127.0.0.1",config["port"]),handler_factory(control,telegram,secret,config))
+        if relay_client.enabled():
+            relay_client.start(secret, config["owner_id"], config["public_url"], "macos").start()
         telegram.prepare()
         for target in (telegram.poll,telegram.notify):threading.Thread(target=target,daemon=True).start()
         print("Connected to existing Codex Desktop chats. Open your bot's Codex menu. Ctrl+C stops only the bridge.")
@@ -136,6 +141,7 @@ def run(config,home):
         server.serve_forever(poll_interval=.5)
     except KeyboardInterrupt:print("Bridge stopped. Codex Desktop remains running.")
     finally:
+        if relay_client.enabled(): relay_client.close()
         if telegram:telegram.stop.set()
         if server:server.server_close()
         if control:control.close()

@@ -310,7 +310,7 @@ class CredentialTests(unittest.TestCase):
         from contextlib import redirect_stdout
         import io
         keys=("TELEGRAM_BOT_TOKEN","CODEX_CLI_PATH","CODEX_THREAD_ID","OPENAI_API_KEY",
-              "CODEX_API_KEY","CODEX_APP_TOOLS_PIPE_PATH","CODEX_MCP_NODE_PATH")
+              "CODEX_API_KEY","CODEX_APP_TOOLS_PIPE_PATH","CODEX_MCP_NODE_PATH","CTD_RELAY_KEY_FILE","CTD_RELAY_PUBLIC_URL")
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
             with patch.dict(os.environ,{k:"synthetic-private-value" for k in keys}), \

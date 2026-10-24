@@ -1,0 +1,83 @@
+name: codex-telegram-desktop
+services:
+  relay:
+    image: ${CTD_IMAGE:?Run scripts/docker.py setup first}
+    user: "${CTD_UID:?Run setup}:${CTD_GID:?Run setup}"
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    pids_limit: 128
+    mem_limit: 512m
+    stop_grace_period: 20s
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m,mode=1777
+    command:
+      - --public-url
+      - ${CTD_PUBLIC_URL:?Run setup}
+      - --owner-id
+      - ${CTD_OWNER_ID:?Run setup}
+      - --token-file
+      - /run/secrets/telegram_bot_token
+      - --key-file
+      - /run/secrets/connector_key
+      - --state-dir
+      - /data
+    ports:
+      - target: 8788
+        published: "8788"
+        host_ip: 127.0.0.1
+        protocol: tcp
+    secrets:
+      - telegram_bot_token
+      - connector_key
+    volumes:
+      - type: bind
+        source: ${CTD_DOCKER_HOME:?Run setup}/state
+        target: /data
+        bind:
+          create_host_path: false
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:8787/healthz',timeout=3)); assert r.get('ok') is True and r.get('service')=='codex-telegram-relay'"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: local
+      options:
+        max-size: 5m
+        max-file: "2"
+  tunnel:
+    image: ${CTD_CLOUDFLARED_IMAGE:?Run setup}
+    user: "${CTD_UID:?Run setup}:${CTD_GID:?Run setup}"
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    pids_limit: 64
+    mem_limit: 256m
+    command: [tunnel, --no-autoupdate, run, --token-file, /run/secrets/cloudflare_tunnel_token]
+    secrets:
+      - cloudflare_tunnel_token
+    depends_on:
+      relay:
+        condition: service_healthy
+    logging:
+      driver: local
+      options:
+        max-size: 5m
+        max-file: "2"
+secrets:
+  telegram_bot_token:
+    file: ${CTD_DOCKER_HOME:?Run setup}/secrets/telegram_bot_token
+  connector_key:
+    file: ${CTD_DOCKER_HOME:?Run setup}/secrets/connector_key
+  cloudflare_tunnel_token:
+    file: ${CTD_DOCKER_HOME:?Run setup}/secrets/cloudflare_tunnel_token
