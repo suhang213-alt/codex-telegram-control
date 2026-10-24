@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "owner_id": 0,
+  "workspace": "REPLACE_WITH_YOUR_EXISTING_ABSOLUTE_WORK_FOLDER",
+  "public_url": "https://panel.example.org",
+  "port": 8787,
+  "codex_command": ["codex"],
+  "sandbox": "read-only"
+}

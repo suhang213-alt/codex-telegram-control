@@ -1,0 +1,7 @@
+{
+  "name": "codex-telegram-control-ui-tests",
+  "private": true,
+  "version": "0.2.0",
+  "scripts": {"test:mobile": "node tests/mobile_smoke.cjs"},
+  "devDependencies": {"playwright": "1.62.1"}
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "codex-telegram-desktop/1",
+  "owner_user_id": null,
+  "service_thread_id": "",
+  "allowed_workspaces": [],
+  "codex_home": "",
+  "plugin_dir": "",
+  "compatibility_acknowledged": false,
+  "tunnel_provider": "none"
+}

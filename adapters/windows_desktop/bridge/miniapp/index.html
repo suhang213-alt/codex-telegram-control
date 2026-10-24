@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080808">
+  <meta name="color-scheme" content="dark">
+  <title>Рабочий стол · Codex</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./task-progress.css">
+  
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="./task-progress.js" defer></script>
+  
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button id="drawer-open" class="mobile-icon" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-drawer">☰</button>
+      <div class="mobile-mode" role="group" aria-label="Разделы панели"><button id="mode-chats" class="selected" type="button">Чаты</button><button id="mode-work" type="button">Работа</button></div>
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div class="brand-copy"><strong>Рабочий стол</strong><small>Codex × ChatGPT</small></div>
+      <div class="topbar-end"><span id="connection" class="connection"><i></i><span>Подключение</span></span><button id="refresh" class="icon-button" title="Обновить" aria-label="Обновить">↻</button></div>
+    </header>
+
+    <button id="usage-strip" class="usage-strip" type="button" aria-label="Открыть лимиты Codex"><span class="usage-strip-label">Остаток Codex</span><strong id="usage-strip-value">—</strong><span id="usage-strip-window" class="usage-strip-window">Получаем данные</span><span class="usage-strip-arrow" aria-hidden="true">›</span></button>
+
+    <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+    <aside id="mobile-drawer" class="mobile-drawer" aria-label="Меню панели" aria-hidden="true" inert>
+      <div class="drawer-head"><div class="drawer-surface" role="group" aria-label="Выбрать приложение"><button type="button" data-surface="codex" aria-pressed="false">Codex</button></div><button id="drawer-close" class="mobile-icon" type="button" aria-label="Закрыть меню">×</button></div>
+      <button class="drawer-search" type="button" data-view="chats">⌕ <span>Поиск чатов</span></button>
+      <div class="drawer-links"><button type="button" data-view="home">⌂ <span>Обзор</span></button><button type="button" data-view="chats">▤ <span>Чаты</span></button><button type="button" data-view="projects">◇ <span>Проекты</span></button><button type="button" data-view="archived">▧ <span>Архив</span></button><button type="button" data-view="new">＋ <span>Новая задача</span></button></div>
+      <div class="drawer-subhead">Недавние чаты</div><div id="drawer-recent" class="drawer-recent"></div>
+      <div class="drawer-foot"><button type="button" data-view="settings">⚙ <span>Настройки</span></button><button type="button" data-view="new" class="drawer-new">＋ <span>Новая задача</span></button></div>
+    </aside>
+
+    <main class="workspace">
+      <section id="usage-view" class="view" aria-labelledby="usage-title"><div class="page-heading"><div><small class="overline">АККАУНТ CODEX</small><h1 id="usage-title">Лимиты использования</h1><p>Остаток по каждому доступному окну</p></div></div><button id="usage-refresh" class="outline-button usage-refresh" type="button">Обновить лимиты</button><p id="usage-refresh-status" class="usage-refresh-status" role="status" aria-live="polite"></p><div id="usage-windows" class="usage-window-list"></div><p id="usage-detail-updated" class="usage-detail-updated">Получаем данные…</p><p class="usage-detail-note">Это общие лимиты аккаунта Codex. Отдельный остаток для модели или ChatGPT Desktop здесь недоступен. Это снимок на указанное время: обновляется при открытии, возвращении в панель и по кнопке. Данные старше 3 минут или после ошибки отмечаются явно.</p></section>
+      <section id="home-view" class="view" aria-labelledby="home-title">
+        
+        <div class="hero">
+          <div class="hero-content"><div class="eyebrow"><span class="eyebrow-line"></span> CODEX × CHATGPT / РАБОЧАЯ ПАНЕЛЬ</div><h1 id="home-title">Задачи и решения</h1><p>Продолжайте работу в чате или запускайте новую задачу в проекте.</p><div class="hero-actions"><button type="button" data-view="chats">Открыть чаты →</button><button type="button" data-view="new">Новая задача ＋</button></div></div>
+        </div>
+        <section class="usage-card" aria-label="Остаток лимита Codex">
+          <div class="usage-copy"><div><small class="overline">ЛИМИТ АККАУНТА CODEX</small><h2>Остаток лимита</h2><small id="usage-updated">Получаем данные…</small></div><strong id="usage-remaining">—</strong></div>
+          <div class="usage-track" role="progressbar" aria-label="Остаток лимита" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="usage-bar"></span></div>
+          <p id="usage-note">Откройте лимиты, чтобы запросить актуальные данные.</p>
+        </section>
+        <section id="operations-section" class="operations-panel" hidden aria-label="Отправленные задания"><div class="section-head"><div><small class="overline">ДОСТАВКА В CODEX</small><h2>Отправленные задания</h2></div></div><div id="operations-list" class="card-list"></div></section>
+        <div class="section-head"><div><small class="overline">ОБЗОР</small><h2>Сейчас в работе</h2></div><button class="text-button" data-view="chats">Все чаты <span>→</span></button></div>
+        <div class="metrics"><button class="metric-card" data-view="chats" data-filter="active"><span class="metric-icon violet">◉</span><strong id="active-count">—</strong><small>Активные</small><span class="metric-arrow">↗</span></button><button class="metric-card" data-view="chats"><span class="metric-icon blue">▤</span><strong id="thread-count">—</strong><small>Чаты</small><span class="metric-arrow">↗</span></button><button class="metric-card" data-view="projects"><span class="metric-icon teal">◇</span><strong id="project-count">—</strong><small>Проекты</small><span class="metric-arrow">↗</span></button></div>
+        <div class="section-head recent-head"><div><small class="overline">НЕДАВНИЕ</small><h2>Последние чаты</h2></div></div><div id="recent-list" class="card-list"><div class="empty-mini">Загружаем чаты…</div></div>
+        <button id="new-task-home" class="primary-action"><span class="action-plus">＋</span><span><strong>Новая задача</strong><small>Выберите проект и начните работу</small></span><span class="action-chevron">→</span></button>
+      </section>
+
+      
+      <section id="chats-view" class="view active" aria-labelledby="chats-title">
+        <div class="page-heading"><div><small class="overline">РАБОЧЕЕ ПРОСТРАНСТВО</small><h1 id="chats-title">Чаты ChatGPT</h1><p id="chats-description">Раздел ChatGPT</p></div><span id="chat-total" class="heading-badge">—</span></div>
+        <label class="search-field"><span aria-hidden="true">⌕</span><input id="chat-search" type="search" placeholder="Поиск по чатам" autocomplete="off" aria-label="Поиск по чатам"></label>
+        <div class="filter-row" role="group" aria-label="Фильтр чатов"><button class="filter-chip selected" data-chat-filter="all">Все</button><button class="filter-chip" data-chat-filter="active">В работе</button></div>
+        <div id="thread-list" class="card-list expanded"><div class="empty-state">Загружаем чаты…</div></div><button id="load-more" class="load-more" hidden>Показать ещё <span>↓</span></button>
+        <button id="mobile-new-task" class="mobile-new-task" type="button" aria-label="Новая задача">＋</button>
+      </section>
+
+      <section id="projects-view" class="view" aria-labelledby="projects-title"><div class="page-heading"><div><small class="overline">НОВЫЙ СТАРТ</small><h1 id="projects-title">Проекты ChatGPT</h1><p id="projects-description">Выберите проект ChatGPT Work для новой задачи</p></div><span class="heading-symbol">◇</span></div><div id="project-list" class="card-list expanded"><div class="empty-state">Загружаем проекты…</div></div></section>
+
+      <section id="archived-view" class="view" aria-labelledby="archived-title"><div class="page-heading"><div><small class="overline">ИСТОРИЯ</small><h1 id="archived-title">Архив ChatGPT</h1><p id="archived-description">Архивные чаты ChatGPT</p></div></div><div id="archived-list" class="card-list expanded"><div class="empty-state">Загружаем архив…</div></div></section>
+
+      <section id="thread-view" class="view detail-view" aria-labelledby="thread-title"><div class="detail-header"><button class="back-button" id="thread-back" aria-label="Назад">←</button><div class="detail-header-copy"><small id="thread-kind">ЧАТ</small><h1 id="thread-title">Чат</h1></div><span id="thread-status" class="status-pill">—</span><button id="thread-actions-toggle" class="thread-actions-toggle" type="button" aria-label="Действия с чатом" aria-expanded="false" aria-controls="thread-actions">⋯</button></div><div id="thread-actions" class="thread-actions" hidden><button id="thread-rename" type="button">Переименовать чат</button><div id="thread-rename-form" class="thread-rename-form" hidden><input id="thread-rename-input" type="text" maxlength="100" aria-label="Новое название чата" placeholder="Новое название"><button id="thread-rename-save" type="button">Сохранить</button></div><button id="thread-pin" type="button">Закрепить чат</button><button id="thread-archive" type="button">Архивировать чат</button></div><div class="transfer"><button id="file-import-toggle" type="button" class="transfer-toggle" aria-expanded="false" aria-controls="file-import-form"><span>↓</span> Получить файл с компьютера <span class="transfer-chevron">⌄</span></button><form id="file-import-form" hidden><label for="file-path">Абсолютный путь к файлу в каталоге проекта</label><div class="transfer-controls"><input id="file-path" type="text" placeholder="C:\Путь\к\проекту\результат.pdf" autocomplete="off" spellcheck="false" required><button type="submit">Получить</button></div><small>До 20 МБ · доступ проверяет сервер</small></form></div><button id="thread-load-older" class="thread-load-older" type="button" hidden>Показать предыдущие сообщения ↑</button><div id="thread-timeline" class="timeline"><div class="empty-state">Загружаем переписку…</div></div><form id="message-form" class="composer" novalidate><div id="attachment-preview" class="attachment-preview" hidden></div><div id="thread-model-controls" class="model-controls compact" hidden><label>Модель Codex<select id="thread-model-select" aria-label="Модель для уточнения"></select></label><label>Интенсивность<select id="thread-effort-select" aria-label="Интенсивность для уточнения"></select></label></div><div class="compose-inner"><label class="attach-button" title="Прикрепить файл" aria-label="Прикрепить файл">＋<input id="message-files" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" hidden></label><button id="composer-settings-toggle" class="composer-settings-toggle" type="button" aria-label="Модель и интенсивность" aria-expanded="false" aria-controls="thread-model-controls">◉</button><textarea id="message-text" rows="1" placeholder="Уточнить задачу…" aria-label="Текст уточнения"></textarea><button type="button" id="voice-button" class="voice-button" aria-label="Записать голосовое сообщение">◖</button><button type="submit" class="send-button" aria-label="Отправить">↑</button></div><small id="thread-operation-status" class="operation-inline" hidden></small><small class="composer-hint">Ваш текст появится сразу; доставка в Desktop может занять до следующего цикла синхронизации · модель задаётся в настройках</small></form></section>
+
+      <section id="new-view" class="view" aria-labelledby="new-title"><div class="detail-header new-header"><button class="back-button" id="new-back" aria-label="Назад">←</button><div class="detail-header-copy"><small>НОВАЯ ЗАДАЧА</small><h1 id="new-title">Создать задачу</h1></div></div><form id="new-form" class="new-form" novalidate><label class="field-label" for="project-select">Проект</label><select id="project-select" required><option value="">Выберите проект</option></select><div id="new-model-controls" class="model-controls"><label>Модель Codex<select id="new-model-select" aria-label="Модель новой задачи"></select></label><label>Интенсивность<select id="new-effort-select" aria-label="Интенсивность новой задачи"></select></label></div><div class="form-note" id="new-model-note">Выбор применяется к этой задаче Codex</div><label class="field-label" for="new-text">Что нужно сделать?</label><textarea id="new-text" rows="7" placeholder="Опишите задачу, ожидаемый результат и важные условия…" required></textarea><button id="new-voice-button" type="button" class="outline-button new-voice-button">🎙 &nbsp;Продиктовать задачу</button><label class="field-label">Файлы</label><label class="upload-zone"><span>＋</span><strong>Прикрепить материалы</strong><small>Фото, видео, PDF, Word, Excel, PowerPoint</small><input id="new-files" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" hidden></label><div id="new-attachment-preview" class="attachment-preview" hidden></div><button type="submit" class="submit-task">Запустить задачу <span>→</span></button></form></section>
+
+      <section id="settings-view" class="view" aria-labelledby="settings-title"><div class="page-heading"><div><small class="overline">ПРЕДПОЧТЕНИЯ</small><h1 id="settings-title">Настройки</h1><p>Для новых задач и уточнений Codex</p></div><span class="heading-symbol">✦</span></div><div class="settings-card"><div class="setting-intro"><span class="setting-icon">✦</span><div><strong>Модель Codex</strong><small>Выбор применяется к следующему действию</small></div></div><label class="field-label" for="model-select">Модель</label><select id="model-select"></select><label class="field-label" for="effort-select">Интенсивность рассуждения</label><select id="effort-select"></select><p class="settings-note">Для чатов ChatGPT выбор модели и интенсивности через Desktop недоступен.</p></div><div class="settings-card utility-card"><div class="setting-intro"><span class="setting-icon blue-icon">◌</span><div><strong>Соединение</strong><small id="connection-detail">Проверяем доступность компьютера…</small></div></div><button id="settings-refresh" class="outline-button">Проверить сейчас ↻</button></div></section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Основное меню"><button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span><span>Главная</span></button><button class="nav-item" data-view="chats"><span class="nav-icon">▤</span><span>Чаты</span></button><button class="nav-item new-nav" data-view="new"><span class="nav-plus">＋</span><span>Создать</span></button><button class="nav-item" data-view="projects"><span class="nav-icon">◇</span><span>Проекты</span></button><button class="nav-item" data-view="settings"><span class="nav-icon">☷</span><span>Настройки</span></button></nav>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="confirm-dialog" class="dialog-backdrop" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><small class="overline">ГОЛОСОВАЯ КОМАНДА</small><h2 id="confirm-title">Проверьте распознанный текст</h2><p id="voice-transcript"></p><div class="dialog-actions"><button id="voice-cancel" class="outline-button">Отмена</button><button id="voice-confirm" class="submit-task">Вставить текст →</button></div></div></div>
+  </div>
+  <div id="decision-backdrop" class="decision-backdrop" role="dialog" aria-modal="true" aria-labelledby="decision-heading" hidden inert>
+    <section class="decision-sheet">
+      <header class="decision-head"><div class="decision-head-copy"><small>РЕШЕНИЕ ПО ЗАДАЧЕ</small><h2 id="decision-heading">Нужно ваше решение</h2></div><button id="decision-close" class="decision-close" type="button" aria-label="Закрыть решение">×</button></header>
+      <div class="decision-scroll"><div id="decision-tabs" class="decision-tabs" role="group" aria-label="Запросы этого чата" hidden></div><p id="decision-context" class="decision-context"></p><div id="decision-content" class="decision-content"></div></div>
+      <div class="decision-foot"><p id="decision-state" class="decision-state" role="status" aria-live="polite"></p><button id="decision-submit" class="decision-submit" type="button" hidden>Отправить ответ</button><button id="decision-refresh" class="decision-refresh" type="button" hidden>Проверить доставку</button></div>
+    </section>
+  </div>
+</body>
+</html>

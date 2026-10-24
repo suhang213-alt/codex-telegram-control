@@ -1,0 +1,53 @@
+name: Offline checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  core:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install .
+      - name: Run guarded core and Desktop adapter fixtures
+        run: python -B scripts/test_offline.py
+      - name: Verify both installed entrypoints
+        run: |
+          codex-telegram --help
+          codex-telegram-desktop --help
+          python -m codex_telegram --help
+      - run: python scripts/verify_release.py
+  mobile-ui:
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [core, desktop]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts
+      - run: npx playwright install chromium webkit
+      - name: Emulate mobile Chromium and WebKit
+        run: npm run test:mobile
+        env:
+          MOBILE_BACKEND: ${{ matrix.backend }}
+          MOBILE_USE_WEBKIT: '1'
+          MOBILE_REPORT_DIR: .test-results/mobile/${{ matrix.backend }}
+  windows-adapter:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python adapters/windows_desktop/scripts/test_offline.py

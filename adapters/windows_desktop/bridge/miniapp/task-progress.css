@@ -1,0 +1,33 @@
+.codex-task-progress{box-sizing:border-box;min-width:0;width:100%;margin:12px 0;padding:14px;border:1px solid #34383f;border-radius:14px;background:#12151a;color:#e9edf2;font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-wrap:anywhere}
+.codex-task-progress[hidden]{display:none!important}
+.codex-task-progress *{box-sizing:border-box;min-width:0}
+.codex-task-progress__heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.codex-task-progress__title{margin:0;font-size:16px;line-height:1.35;overflow-wrap:anywhere}
+.codex-task-progress__percent{flex-shrink:0;font-size:23px;line-height:1.2;font-variant-numeric:tabular-nums;color:#b4dec6}
+.codex-task-progress__bar{height:6px;margin:12px 0;border-radius:4px;background:#303740;overflow:hidden}
+.codex-task-progress__bar>span{display:block;max-width:100%;height:100%;background:#8bc9a6}
+.codex-task-progress__connection{margin:8px 0;color:#a7b8cd;font-size:12px}
+.codex-task-progress--stale .codex-task-progress__connection{color:#edc982}
+.codex-task-progress__summary{margin:8px 0;font-weight:650}
+.codex-task-progress__current,.codex-task-progress__forecast{margin:6px 0}
+.codex-task-progress__forecast{font-size:12px;color:#aeb8c7}
+.codex-task-progress__checkpoints{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;list-style:none;padding:0;margin:12px 0}
+.codex-task-progress__checkpoint{display:flex;align-items:flex-start;gap:6px;color:#bac3d0;font-size:12px}
+.codex-task-progress__mark{flex-shrink:0;color:#7f8a9a}
+.codex-task-progress__checkpoint--done .codex-task-progress__mark{color:#91d2ac}
+.codex-task-progress__results{display:grid;gap:7px;margin:12px 0}
+.codex-task-progress__result{padding:9px 10px;border:1px solid #303740;border-radius:8px;background:#191e25}
+.codex-task-progress__result>strong{font-size:12px}
+.codex-task-progress__result-status{display:block;margin:2px 0;color:#a7b8cd;font-size:11px}
+.codex-task-progress__result>p{margin:4px 0 0;font-size:12px;white-space:pre-wrap}
+.codex-task-progress__times{margin-top:10px;padding-top:8px;border-top:1px solid #303740;color:#9ba9bb;font-size:11px;font-variant-numeric:tabular-nums}
+.codex-task-progress__times>p{margin:3px 0}
+.codex-task-progress__runtime{margin:8px 0;font-weight:650}.codex-task-progress__basis,.codex-task-progress__provenance,.codex-task-progress__empty{color:#b6bfcc;font-size:12px}.codex-task-progress__basis{margin:5px 0}
+.codex-task-progress__checkpoint-content{display:block;flex:1 1 0}.codex-task-progress__checkpoint-title{display:block}.codex-task-progress__checkpoint-details{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px;margin-top:3px}
+.codex-task-progress__checkpoint-state{font-size:10px;color:#a6b8ca}.codex-task-progress__checkpoint-progress{font-size:11px;color:#c0d9ce;font-variant-numeric:tabular-nums}.codex-task-progress__checkpoint[data-checkpoint-status="in_progress"]{color:#e1d6b5}.codex-task-progress__checkpoint[data-checkpoint-status="waiting"] .codex-task-progress__checkpoint-state{color:#edc982}.codex-task-progress__checkpoint[data-checkpoint-status="blocked"] .codex-task-progress__checkpoint-state{color:#efb2a7}
+.codex-task-progress__provenance{display:block;margin-top:5px;color:#c5b58d}
+.codex-task-progress__bar[hidden]{display:none!important}
+.codex-task-progress__compact{display:none}
+body.thread-open #thread-progress{flex:0 1 auto;min-height:0;max-height:40dvh;overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:thin}
+#thread-progress:empty{display:none}
+@media(max-width:350px){.codex-task-progress{padding:11px}.codex-task-progress__checkpoints{grid-template-columns:minmax(0,1fr)}.codex-task-progress__title{font-size:15px}}

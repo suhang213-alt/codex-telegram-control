@@ -1,0 +1,3 @@
+# Optional cloud encryption modules retained for protocol compatibility.
+# The default local polling mode does not import these third-party modules.
+cryptography>=46.0.0,<47

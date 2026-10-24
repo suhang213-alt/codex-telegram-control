@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"><title>Codex · Telegram</title><link rel="stylesheet" href="/style.css"><script src="https://telegram.org/js/telegram-web-app.js"></script><script defer src="/app.js"></script></head>
+<body><main id="app">
+  <header><div><span class="eyebrow">ЛОКАЛЬНЫЙ CODEX</span><h1>Ваш рабочий чат</h1></div><button id="refresh" type="button" aria-label="Обновить">↻</button></header>
+  <p id="status" role="status">Подключение…</p>
+  <nav><label class="sr" for="thread-list">Чат</label><select id="thread-list"><option value="">Создайте чат</option></select><button id="new" type="button">Новый</button><button id="settings" type="button">⋯</button></nav>
+  <section id="options" hidden>
+    <label>ID выбранного чата<input id="selected-id" type="text" readonly aria-label="ID выбранного чата"></label>
+    <label>Модель<select id="model"><option value="">По умолчанию Codex</option></select></label>
+    <label>Интенсивность<select id="effort"><option value="">По умолчанию</option></select></label>
+    <button id="models-refresh" type="button">Обновить модели</button><button id="stop" class="danger" type="button">Остановить задачу</button>
+    <button id="files-refresh" type="button">Файлы результата</button><div id="files"></div>
+    <details><summary>Прогресс выбранного чата</summary><div id="progress">Подтверждённый план пока не записан.</div></details>
+    <p class="note" id="backend-note">Каталог моделей не подтверждает доступ по подписке.</p>
+  </section>
+  <section id="decisions" aria-label="Запросы подтверждения"></section>
+  <section id="messages" aria-label="История чата" aria-live="polite"><p class="empty">Создайте чат и отправьте задачу.</p></section>
+  <form id="composer"><div id="attachment-status" role="status"></div><div class="input-row"><label class="attach" title="Прикрепить файл">+<input id="file" type="file" aria-label="Прикрепить файл"></label><label class="sr" for="input">Сообщение</label><textarea id="input" rows="2" maxlength="32000" placeholder="Напишите задачу…"></textarea><button id="send" type="submit">Отправить</button></div><p class="note">Содержимое отправляется вашему локальному Codex. Подтверждения — только по вашему выбору.</p></form>
+  <p id="error" role="alert" hidden></p>
+</main></body></html>

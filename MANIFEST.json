@@ -1,0 +1,714 @@
+{
+  "schema": "public-release-manifest/1",
+  "project": "codex-telegram-control",
+  "version": "0.2.0",
+  "release_status": "candidate",
+  "prepared_on": "2026-10-24",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 58,
+      "sha256": "9a5b3e8c93ebcd35a580f2c2cf3b51cad2f4e5c1514a6984f454f36b355dacd8"
+    },
+    {
+      "path": ".github/workflows/check.yml",
+      "bytes": 1635,
+      "sha256": "8eb16675b7b6b149c5c149bef3bf99995c1ed91e5bfe63e4ac7ff20b09f23cc7"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 223,
+      "sha256": "8da169b2fede6da361277eaa99ba434be60aad2ee08c0e41c89c4010654ce170"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/activity_watch.py",
+      "bytes": 11579,
+      "sha256": "5172fc8e59698b9b749c9d548fa84676b060f6c68d9ff7686c26f03c89a3ce62"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/all_task_progress.py",
+      "bytes": 40061,
+      "sha256": "2ee72d0f990b4ebbcd2786e7fb8d4cc2fe9ce83b64022e44d66d610093da1a26"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/artifact_native_loader.py",
+      "bytes": 9563,
+      "sha256": "a898dd59e094748c4d18b65be92386ac747f014f34fbbdd744af13f27e845391"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/artifact_results.py",
+      "bytes": 28861,
+      "sha256": "e218a0b4e5ba0ee7bfb1408e3fe42dd3a99bec16f8c4bbe5f32a0fde800628c0"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/background_dispatcher.py",
+      "bytes": 49328,
+      "sha256": "7ddf14eb85ff165e71bb5dbfaf4ee6636b9346c879c70a49fec9780fdd1b5517"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/background_events.py",
+      "bytes": 6903,
+      "sha256": "bc7c8afad11e7efdf9b511d7a4bbfff22385ec5ec4d0b9b2025f6788cc008f3f"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/background_native_view.py",
+      "bytes": 16278,
+      "sha256": "41b2808e23ca8878ab19cb4c51efb798f4a0f63f83ceeb9b4248e32755802cd1"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/background_service.py",
+      "bytes": 13777,
+      "sha256": "8a72a88d384ceb523a9b8909c11ef3c05a55665caa66afa8170314b2cc7aa0d9"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/bridge_config.py",
+      "bytes": 4983,
+      "sha256": "8c7989f7f66f857e36139357c314af5432f33f0d9c1ec1d4460f370fd06ddece"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/cli_payload.py",
+      "bytes": 1091,
+      "sha256": "b23f31de184e94099eef36f3a634091bc8781cc56598d9b1bc031b93fd64c87d"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/cloud_mcp_client.py",
+      "bytes": 14031,
+      "sha256": "76ed96ee63db070402a5396b79edc476d2bb5d9c9f63c9a5c8ad78fc9a9513f9"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/cloud_recovery.py",
+      "bytes": 12090,
+      "sha256": "a6e34c31ebdd15ae5f76290764704107609d348de70cb13f25d183ca9ad2f2ad"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/cloud_transport.py",
+      "bytes": 1803,
+      "sha256": "db366bb64943aad28d44b0349a11fb0ce770c1ede19eeeafc07447d5213665a9"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/decision_service.py",
+      "bytes": 35963,
+      "sha256": "7b3e74f6b528dfded84ad23c4f004d729570478a497a1ecaa959e48072111a99"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/delivery_reconcile.py",
+      "bytes": 4449,
+      "sha256": "d823304cdd9b3977b30215b85a088ccb361dc1c9c04a015a872dae80bb2c6648"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_control.py",
+      "bytes": 14147,
+      "sha256": "b352077300e5c7689d6d1f0e12a888e1fa36ae360d51bddb28b1ee7b901376b1"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_lifecycle.py",
+      "bytes": 9584,
+      "sha256": "cec96d7b05a8c3962b82134c3ef7ce3118278a866185d3e0e72851d73c92ce4c"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_menu.py",
+      "bytes": 17754,
+      "sha256": "e13e054bbf6252f897aed284a6739f58dec0196513e1b05cd1b51698027f0f23"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_progress_server.py",
+      "bytes": 4019,
+      "sha256": "3b0a83845e71adf3512500ec30dec28ff9988478afe9c97be8f85d3fd63f84d9"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_push.py",
+      "bytes": 8998,
+      "sha256": "3b8b8ed45f65f4fd41af8177020494cc07e76f36b5788470f5c92c73bb5e859a"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_startup.py",
+      "bytes": 18796,
+      "sha256": "76bb6aab8b5d66d67cc156c0c3120ac12eaa4454470848ed37e60244ed5cc7b6"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_transport.py",
+      "bytes": 8812,
+      "sha256": "a6159cb8c489b01e7d789983243b78f67b8b23ba30a016f36c824e58dfcfc6f3"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/desktop_wake.py",
+      "bytes": 1855,
+      "sha256": "1d1dbb90ce921655fe6ab8f043e1b89b2858fcfda8f6f4f62d37932cf2b73b0c"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/fast_dispatch.py",
+      "bytes": 14195,
+      "sha256": "a262115e973dc15053e238a874244643041dfc8e6abf8a53fbc9213704a2e98c"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/find_codex_cli.py",
+      "bytes": 2167,
+      "sha256": "fdd902f69f76d8e7a748918e0b3ecabdc68cfd8c9fcec7fd8503b562bf786364"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/kanban_proxy.py",
+      "bytes": 286,
+      "sha256": "f9c63ab7bad0c9c261973f0582b4139417d3de8751b06fd9ac23d5740a5365d5"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/latency_trace.py",
+      "bytes": 2162,
+      "sha256": "e702d1258f0ca9b0e075b7ecdb68fd300f32c9459faf994a7e64c1f13af81e07"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/all-task-progress.js",
+      "bytes": 7253,
+      "sha256": "c95e7bbe899687d471d6419b542dfe9dac7fbb90b84e746244ed63e69b332f9b"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/app.js",
+      "bytes": 109147,
+      "sha256": "42c5f497d827510070ddd70c1553aa20106875ba7935e7b2db45261e78774724"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/desktop-progress.html",
+      "bytes": 1849,
+      "sha256": "769ba1355681cf8138c7bd371866770c90aaeef33b53ae37e92a32fafb4f45bd"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/desktop-progress.js",
+      "bytes": 1229,
+      "sha256": "0d194c8f2bdcb7c6cba97b9f73e7573d0d3c3ab2528b7a881c6b1e96e32fb305"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/index.html",
+      "bytes": 19095,
+      "sha256": "fd4eeed8b5c42ee652fe32f542942aeed965c33cc173fc15230fffefd6331697"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/marble.svg",
+      "bytes": 1815,
+      "sha256": "4fb4c754ac5396f687a36538e8f35e8ef297917eac852d8431b107400ace07ef"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/styles.css",
+      "bytes": 67272,
+      "sha256": "b40dac201ae2ce8bf4b94e21e37fcacce4d3e0de1f603de8181411ab729a056e"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/task-progress.css",
+      "bytes": 3715,
+      "sha256": "d60f1ca7bb06652a519f375ce7290fad3cbd03907d41f077b9f8450fd956462a"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp/task-progress.js",
+      "bytes": 15565,
+      "sha256": "9f204398413be0d23560a4e7c4475e7c8d7ef6e04589f2b7b57717943d78aa87"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp_probe.py",
+      "bytes": 7453,
+      "sha256": "5ebf4d0e5fd54ceb38a38d2e001345b3342eacb08e85f66e13b40c003fd43508"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/miniapp_server.py",
+      "bytes": 80278,
+      "sha256": "c2b9279dbc69e4a2c3f2929b32b850df4315b12a1a24e584d9ca38e413cd6fd6"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_delegation.py",
+      "bytes": 3405,
+      "sha256": "a087daaa3215a7f8fc01e20b3ed56224cd78010554856cd22563df9a15b48b96"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_discovery.py",
+      "bytes": 13859,
+      "sha256": "ab0309f5cbdf59643453786bb2feb9a7e84ff6ec37f5c82fd19fe3571647bbc4"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_gateway_bridge.py",
+      "bytes": 8521,
+      "sha256": "82ba7669427a6ed4cda1c268cf7a345d0f78088367c2a6eb6e537406e0357299"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_gateway_client.py",
+      "bytes": 13030,
+      "sha256": "2cfffc486fc24f7b846b923f74a8e163f64cc362b8dc7c2eb5810ea528b1ee8d"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_gateway_protocol.py",
+      "bytes": 22440,
+      "sha256": "6f159af5ba7e7e9d0f283260aad82666f40879d8c9ce2bc2b95906bcbde0aae8"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_gateway_proxy.py",
+      "bytes": 23265,
+      "sha256": "5822c011028c2a655da5d3e9217e47225dff02b43ae0a7830c6f2a19fd834b03"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_mcp_client.py",
+      "bytes": 12064,
+      "sha256": "3f2a7549793d799117b9613c4ce66f48e7538642114f17f3cbd1fe54fb8fde6c"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/native_wait_fallback.py",
+      "bytes": 3241,
+      "sha256": "0d86b12e4a8e360dabee4c0fdb716c2a2d15aaa14f2a2ffeb6268fb4c4242dbc"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/network_events.py",
+      "bytes": 6666,
+      "sha256": "7debe95e9c92c36bfab739bf8c13f3786df6b9ec7995f551ad208d20ae253e29"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/operation_ledger.py",
+      "bytes": 16161,
+      "sha256": "9c3d5444cea4263c93ab08de035c7f15902346eaae383efb0224cb872039f11f"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/progress_cli.py",
+      "bytes": 9421,
+      "sha256": "de5c582b7768a2d5af49761825596e97f47771d0323795ebc194dc446755b18f"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/response_watch.py",
+      "bytes": 32567,
+      "sha256": "e52c7e0d53b06ad6b8223a4a0c8a51bcdb63cf076b5d5634d8e813615dbb79d8"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/study_status.py",
+      "bytes": 158,
+      "sha256": "758fc5155a17ec1ff524826ed16433e59744337105c0c0a12c4c50c92aceb2e8"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/task_progress.py",
+      "bytes": 9937,
+      "sha256": "30cd846c6bbca120b8620e4037eb7f2e27967ea58fc12f334399d3ac60876208"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/telegram_bridge.py",
+      "bytes": 88017,
+      "sha256": "41473081ef8cda23df7b88fc9819e1359c92430bb61fccdc298f31c01de38b0e"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/telegram_webhook_cli.py",
+      "bytes": 13498,
+      "sha256": "04bdb4e67c2e2c264d5a635e0bda20d76577c2cdc7ca1666ac6119bff01443f9"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/transcribe_voice.py",
+      "bytes": 795,
+      "sha256": "9bc8015e420bc3aa618cfb0027a80e44a4020539f9b8ebdce5071ee13a702fae"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/usage_provider.py",
+      "bytes": 10156,
+      "sha256": "4c8b6d1256afdc6e8c3f075e4f19cb10aa2d03e8b35f6b9fb7bc2b841e45f48a"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/wake_dispatcher.py",
+      "bytes": 838,
+      "sha256": "86bcc418536ae64dc8ecaf39e2ac0d6c772acd10ad28d6ef5fc867c4c771c0d8"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/windows_read_events.py",
+      "bytes": 8117,
+      "sha256": "d4ffcfa194c05ff23a5ea6640b33857ebdd6ad30ad6eb94560fdb285346714e0"
+    },
+    {
+      "path": "adapters/windows_desktop/bridge/work_scope.py",
+      "bytes": 2692,
+      "sha256": "dd3df0a8e04b89fb23ba0af48a361b86c680fcecaece4721871278b570f5af63"
+    },
+    {
+      "path": "adapters/windows_desktop/config.example.json",
+      "bytes": 231,
+      "sha256": "6c29cdfc336a7fbd862a576cfe8c93f19af0842eaa8475efd4bfe541f7f8db35"
+    },
+    {
+      "path": "adapters/windows_desktop/gateway/activate.py",
+      "bytes": 1760,
+      "sha256": "b3906440bdaf8f7127991a6ae0182a59c25d91755333dab8d19dc9bc56d3ff99"
+    },
+    {
+      "path": "adapters/windows_desktop/gateway/build.py",
+      "bytes": 4016,
+      "sha256": "9bda35423ee7b6a0436f814b5791913216d3d744b59e201cc1e135c65bc0d22b"
+    },
+    {
+      "path": "adapters/windows_desktop/gateway/CodexGatewayShim.cs",
+      "bytes": 7828,
+      "sha256": "011389d50f5ebdcb421c32980cec81776badd3cb2eef14e82f0875e6c6d34409"
+    },
+    {
+      "path": "adapters/windows_desktop/gateway/read_engine_identity.py",
+      "bytes": 4182,
+      "sha256": "3f6c175d2b9a25b07c80ae91144c0ed23461ebc5e5a9d52dd83ca02361825c37"
+    },
+    {
+      "path": "adapters/windows_desktop/README.md",
+      "bytes": 10473,
+      "sha256": "6e6ea436f77fb5a0778a48c5d59a08c18dffd4e79a96c42145995b717d2fa5a6"
+    },
+    {
+      "path": "adapters/windows_desktop/requirements.txt",
+      "bytes": 174,
+      "sha256": "a59991b08e899461745222c6c1db1865c271b55c66509431a266bd882bd29c39"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/_common.py",
+      "bytes": 407,
+      "sha256": "b5d550f7004db23ec2534e54037a0c022af81d78a1dd0917627ce1b902277105"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/doctor.py",
+      "bytes": 3640,
+      "sha256": "6fe4809bfca11b75af4c9b64d00cad74b8d7729229aa9f395a5d42a59a50e6be"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/pair.py",
+      "bytes": 500,
+      "sha256": "9415a8a11a56c67345aaa7631447b66e5c87b00c188a60a316e6b65790576294"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/setup.py",
+      "bytes": 3009,
+      "sha256": "4ca5d1db1120e51301059d827f3f52a985783989248841d175ca002458d74df7"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/start.py",
+      "bytes": 1326,
+      "sha256": "b9dd9cbc3e396eff01d3c43f42b2755971309852b3d2eb86c3652438efb5679c"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/test_offline.py",
+      "bytes": 1333,
+      "sha256": "3dd1612fb7b30f37fa620865299fdbd9fca4d4bcce977b506b18e93412f9a894"
+    },
+    {
+      "path": "adapters/windows_desktop/scripts/uninstall.py",
+      "bytes": 1687,
+      "sha256": "f86831daaca550e1df5c04d87c249bfca4987091196d6a8f16c9ae9f739c0a59"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_all_task_progress.py",
+      "bytes": 26107,
+      "sha256": "b5d7093dbed079eeae4f2b35ba0f3f3293cfb12d539270fa78a1e413cf22addf"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_artifact_results.py",
+      "bytes": 28694,
+      "sha256": "98e1265f970036913a6cf2530798cbd168a39c38d7e4e98f16fa9a5d5d74bd34"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_background_gateway.py",
+      "bytes": 9343,
+      "sha256": "d3a073c4b089a755f886eb40ede5740086c5db8bc6bf35dd42b8a5ec1c37f82b"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_cli_payload.py",
+      "bytes": 2837,
+      "sha256": "df4d5544759405d4a11eed70fb036244345d0d5624ea5f3e5789520c466e588f"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_decision_protocol.py",
+      "bytes": 5927,
+      "sha256": "ea52f1bc0fee739405c709faf318e22b17d420083294132099c2bb3a69ca4369"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_decision_service.py",
+      "bytes": 29835,
+      "sha256": "72a3cedf2c433b96d3c0785616a6f61432553193d4c6d8bb474a87bf21869415"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_delivery_reconcile.py",
+      "bytes": 3930,
+      "sha256": "23a15179aaf05a923003f1fc986a0e40f75c1ebfa4cd51bcfa0eff100ce36e82"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_native_discovery.py",
+      "bytes": 11584,
+      "sha256": "9c2ead1aff23841f90f4278fc05541a034b4b4626e053f258efc09637b641ed0"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_native_gateway_bridge.py",
+      "bytes": 14204,
+      "sha256": "886e9fa5c7ffc180671d52ea13896ea3bc5eba490dd37daf073144c8f62a465d"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_native_gateway_client.py",
+      "bytes": 8922,
+      "sha256": "b8a3052c8dafd87fba73e4a9191ce32cbdcc7f9e0e532cef27ad9c309c57f06c"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_native_gateway_protocol.py",
+      "bytes": 13769,
+      "sha256": "71720954e2b7a469f04d1c0e6bb3157c8a4eed42a36dbf414060f7f55fc31889"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_native_gateway_proxy.py",
+      "bytes": 15417,
+      "sha256": "c5caa1baa244ab3683c9361188705aa64bf9544a946bd2ffa8c51492714b2125"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_portable_configuration.py",
+      "bytes": 5329,
+      "sha256": "f1799c1f42fa058fca8e23b90e4c7847f7c7531780edfd5312be9c14c282a7ba"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_progress_cli.py",
+      "bytes": 11006,
+      "sha256": "806788f0636f912e6be78943b759ffdd38048f107d27d4f075415cea18db7e17"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_stage_progress.py",
+      "bytes": 7686,
+      "sha256": "74aabe65381aad4d5e0e359918d474c20c9d47dba4b0de495b80b3604a89acc1"
+    },
+    {
+      "path": "adapters/windows_desktop/tests/test_task_progress.py",
+      "bytes": 10836,
+      "sha256": "9b8f6e6954d75871432b3ffe78a068634c187d0c44282f9f5b37348b0a8c8847"
+    },
+    {
+      "path": "config.example.json",
+      "bytes": 218,
+      "sha256": "563316657aa5c5b6b5d50be264e24cfb5b41fddd8ad985bef615532ecc6082bb"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "bytes": 13612,
+      "sha256": "450d9f7d916753faba0412116bf7887afb60262a85884de1581d0bca1349df93"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "bytes": 19179,
+      "sha256": "e59e8ff89fff38ae1b564d0b791e8c73bc6b4e595b6e6c6db60a3840f1a6a642"
+    },
+    {
+      "path": "docs/INSTALL_MACOS.md",
+      "bytes": 12859,
+      "sha256": "9c0a1bf53b42f322165b665c8dbae7d9376e6f706330044a316cc22e196d45df"
+    },
+    {
+      "path": "docs/INSTALL_WINDOWS_LINUX.md",
+      "bytes": 7291,
+      "sha256": "433e64ae939c1702216a9bacb26b8b53a9ea86eff8c26ea1706975f961ec8c02"
+    },
+    {
+      "path": "docs/MACOS_DESKTOP.md",
+      "bytes": 13179,
+      "sha256": "e32e25029ce89d83f4984316df999dc5cbfb74a5d590b29906ce111c80a61c50"
+    },
+    {
+      "path": "docs/MOBILE_ACCEPTANCE.md",
+      "bytes": 13784,
+      "sha256": "114eb12b5f10a4bc6c44c236c39c8d3d0d5a7fc6017928457827b26b1325b9be"
+    },
+    {
+      "path": "docs/OPERATIONS.md",
+      "bytes": 18200,
+      "sha256": "b9d27112189273108cecdca51b54463b6e4de2b76c6c5c28dbbe3b10776d1ff4"
+    },
+    {
+      "path": "docs/RELEASE.md",
+      "bytes": 8796,
+      "sha256": "0285c33b967000fd2049e9e7fa331088c9218d6a79dec3f38f3f4575f9c243d3"
+    },
+    {
+      "path": "docs/VALIDATION.json",
+      "bytes": 4544,
+      "sha256": "5ad70fa63307523a690df38e860fc590401dc135142e51b69827ccb288d18e30"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1069,
+      "sha256": "72380798af61d6131287b0dd3c8dc5345535df641002fece3a02d7ef109c5f8e"
+    },
+    {
+      "path": "package.json",
+      "bytes": 197,
+      "sha256": "1985db837eb544e6fd23a12626f41667b9480a7530b0bfd9b513e1c3169b73fb"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 536,
+      "sha256": "2b927b233fa82e9fb757f1cdbc88de1172ae6c25a7a22a41461c093031ef7828"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9732,
+      "sha256": "c1072530619062784c87abfcaaa92f82a820e846b80e24cacf2c528070bc628b"
+    },
+    {
+      "path": "scripts/build_release.py",
+      "bytes": 1912,
+      "sha256": "0b95eaedcd19f84e77df10ddc7cc938a25a1d2485fc9414d4bbd5491217f2399"
+    },
+    {
+      "path": "scripts/configure.py",
+      "bytes": 1661,
+      "sha256": "d9ef48c13b94c433dbe9092dfac586ab80c5efab1402f45565c9c5a7582da712"
+    },
+    {
+      "path": "scripts/identify-owner.py",
+      "bytes": 2238,
+      "sha256": "cf965d476f06f020093a82f63cac72687f8f84c1e718b2b1325723bbdf80fb2f"
+    },
+    {
+      "path": "scripts/install-linux.sh",
+      "bytes": 512,
+      "sha256": "2a626bc4ff1ebd0454f79f0f6c6a71511b762306941e5bed9f29d38ae3f5aed7"
+    },
+    {
+      "path": "scripts/install-macos-desktop.command",
+      "bytes": 847,
+      "sha256": "3a58a0553e16a1096db2d4553a0caabbe7c2c171c07bc5b56ee7d6c37faaa68f"
+    },
+    {
+      "path": "scripts/install-macos.command",
+      "bytes": 1010,
+      "sha256": "6f835d8cae77698ba87139894bda0d3e686e9756b25d9e31b60fb9433ff3c62a"
+    },
+    {
+      "path": "scripts/install-windows.ps1",
+      "bytes": 775,
+      "sha256": "db1bf52aa214a1a6798f3e7d526714384a2710ddb6a180470c95cb9f45e31ccc"
+    },
+    {
+      "path": "scripts/test_offline.py",
+      "bytes": 3171,
+      "sha256": "cd567afbd7e795714af806a97420a92cb5bd0caaf75c8e54421438754a5aa59a"
+    },
+    {
+      "path": "scripts/verify_release.py",
+      "bytes": 2948,
+      "sha256": "508d128f6ba64bb94fcf367b05830b385e153aea37792e8c5e25f1394983d208"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 17115,
+      "sha256": "17579efc6d8b71a6aed56b794c46b0b8d11dba67d79fa6cf80b58ffc4054f1d4"
+    },
+    {
+      "path": "src/codex_telegram/__init__.py",
+      "bytes": 102,
+      "sha256": "5595438f002a79ed25f34571def9fbede7ad1f3c8929bec4c39fcdd423959f97"
+    },
+    {
+      "path": "src/codex_telegram/__main__.py",
+      "bytes": 47,
+      "sha256": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4"
+    },
+    {
+      "path": "src/codex_telegram/cli.py",
+      "bytes": 9838,
+      "sha256": "d60ca338dcd63f368c105cc05d5dff69e3a1ee48a802eb24dec3111e478f0b89"
+    },
+    {
+      "path": "src/codex_telegram/config.py",
+      "bytes": 5516,
+      "sha256": "385851496674368ea934b4b2d8249995a3cb6b80529abf6db7c11c4d17610d9e"
+    },
+    {
+      "path": "src/codex_telegram/controller.py",
+      "bytes": 24624,
+      "sha256": "89c686b867a472bed5486b4283f84bfba6dc2f185cc10335b4a224c2f087a36d"
+    },
+    {
+      "path": "src/codex_telegram/desktop_controller.py",
+      "bytes": 8091,
+      "sha256": "87674d26b22cfc58ae343210cf8f32fae8ffaffaac9f5b9883b73a78a608e25a"
+    },
+    {
+      "path": "src/codex_telegram/desktop_gateway.py",
+      "bytes": 42210,
+      "sha256": "05a9a1bea597521f0ecb8b75894b0b06136731410a65f2f5463eed35b51a1434"
+    },
+    {
+      "path": "src/codex_telegram/desktop_rpc.py",
+      "bytes": 7796,
+      "sha256": "f839144bfc2e1569624fadb372c055f08e21228443b82f3e2d6cae4104ebaff3"
+    },
+    {
+      "path": "src/codex_telegram/macos_cli.py",
+      "bytes": 7135,
+      "sha256": "490d066b94ae609ef614c25a32ba307288948c7aaa29c5104058b95238dabddf"
+    },
+    {
+      "path": "src/codex_telegram/macos_platform.py",
+      "bytes": 14475,
+      "sha256": "d922e999551aca9a3624d9620a8631e4d2c41d4446a9739d98b49db2c6e25e47"
+    },
+    {
+      "path": "src/codex_telegram/progress.py",
+      "bytes": 3217,
+      "sha256": "8e53cc5d4425d72bdbc2edf69fb51cf917266217254b8a4f4924a74afd26557a"
+    },
+    {
+      "path": "src/codex_telegram/rpc.py",
+      "bytes": 4782,
+      "sha256": "701ec4a3197392e8555d4c17d154575fda491900d4041cdb795216cf5e273909"
+    },
+    {
+      "path": "src/codex_telegram/security.py",
+      "bytes": 1688,
+      "sha256": "a81affbb439178924071f8a60d668e8da5648ef8e009cf3569694b30cbd47ef6"
+    },
+    {
+      "path": "src/codex_telegram/server.py",
+      "bytes": 6377,
+      "sha256": "4175466c3cca500f417f88589dabdcab3915dffd94feee16f1ea0c2a0a916f5d"
+    },
+    {
+      "path": "src/codex_telegram/static/app.js",
+      "bytes": 11846,
+      "sha256": "86ebf689a7d08b569b208eadcfd30dfef73bddad487eb777a4e08b7fe3260796"
+    },
+    {
+      "path": "src/codex_telegram/static/index.html",
+      "bytes": 2901,
+      "sha256": "dc460a1e6715df620d0e57da23272577c22119b39893fd2637fe05a0ae67f2bd"
+    },
+    {
+      "path": "src/codex_telegram/static/style.css",
+      "bytes": 4286,
+      "sha256": "7492144e09f2b2ab0fd58550f4543308795c1ac820c9b0a101c982ffacf093d2"
+    },
+    {
+      "path": "src/codex_telegram/telegram.py",
+      "bytes": 9990,
+      "sha256": "a4b4ce0e79e17255457274379cb08c40699dde85c8bf2b2e7d052a6f145cc057"
+    },
+    {
+      "path": "tests/fake_app_server.py",
+      "bytes": 2083,
+      "sha256": "fe9c07c3666ab772c69aa582f6e4785b5bbf3a6e92581292f097e2ca815a74b1"
+    },
+    {
+      "path": "tests/mobile_smoke.cjs",
+      "bytes": 16333,
+      "sha256": "2b53c1571692c2e65c488ded52b63e60bb893bdacc332b34ef3eb0e01a4e0ed4"
+    },
+    {
+      "path": "tests/test_core.py",
+      "bytes": 20826,
+      "sha256": "168f0675a0db45dec56f73f146a6d08b817e77b51f8b6b1056e267e62e0fe4a8"
+    },
+    {
+      "path": "tests/test_desktop_controller.py",
+      "bytes": 12213,
+      "sha256": "9a30db84cfad63e567168315580330fb69f8c1691fc92f5f084d1793ab4330ec"
+    },
+    {
+      "path": "tests/test_desktop_gateway.py",
+      "bytes": 15950,
+      "sha256": "37b7adfd9f67924ce90f1361bfbdb0687db0f124c7f49b3064fb00be40225a7f"
+    },
+    {
+      "path": "tests/test_macos_platform.py",
+      "bytes": 15588,
+      "sha256": "48c3b446e43fa73f274bd47e2a381ab0ed939905a7e6df476babf63ded09b011"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 1917,
+      "sha256": "714a24cd5ca03610574f11c2f297da2c89a6a006f77aad6854d958d772b057a3"
+    }
+  ]
+}
