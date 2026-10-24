@@ -24,6 +24,27 @@ py -3.12 adapters/windows_desktop/scripts/start.py
 
 `doctor.py` проверяет локальные предпосылки без обращения к Telegram. `--native` выполняет только handshake и получение каталога native tools, без вызова модели. `start.py` повторяет эту проверку перед polling. Запуск остаётся в текущем терминале; остановка — **Ctrl+C**. Автозагрузка и задачи Windows этим комплектом не создаются.
 
+После запуска `start.py` откройте личную ссылку из `pair.py`, нажмите Start в Telegram и отправьте `/menu`, чтобы открыть панель. Не пересылайте ссылку привязки другим людям.
+
+### Выбор bundled plugin
+
+Если версии неоднозначны или `doctor.py` сообщает `native_plugin: FAIL`, перечислите каталоги с `server.mjs`. Введите тот же **абсолютный Codex home**, который указали при настройке, без кавычек; Enter выбирает стандартный профиль:
+
+```powershell
+$codexProfile = Read-Host 'Абсолютный Codex home без кавычек (Enter: стандартный)'
+if (-not $codexProfile) { $codexProfile = Join-Path $env:USERPROFILE '.codex' }
+$pluginRoot = Join-Path $codexProfile 'plugins\cache\openai-bundled\codex-app-tools'
+Get-ChildItem -LiteralPath $pluginRoot -Directory | Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'server.mjs') -PathType Leaf } | Select-Object -ExpandProperty FullName
+```
+
+Скопируйте выведенный абсолютный **путь каталога версии**, без имени `server.mjs`, в поле `Installed bundled codex-app-tools directory`. При уже сохранённой настройке повторите `setup.py`: введите `ACCEPT`, затем `RECONFIGURE` и заново свои прежние параметры с выбранным каталогом. Пока обычный Desktop открыт, проверьте:
+
+```powershell
+py -3.12 adapters/windows_desktop/scripts/doctor.py --native
+```
+
+Продолжайте только при `ok: true` и `native_verified: true`. При неуспешной проверке другой установленной версии потребуется снова `setup.py` → `RECONFIGURE`; максимальный номер версии не является доказательством совместимости. Если список пуст, проверьте выбранный профиль и наличие bundled `codex-app-tools` в вашей установленной версии Desktop. Чужой каталог plugin из другого профиля не копируйте.
+
 ## Ответы на настоящие запросы разрешений Desktop
 
 Обычный native MCP не даёт универсального способа ответить на ожидающий stdio approval исходного Desktop. Для этой возможности предусмотрен дополнительный shim, который сохраняет исходные ID запросов, текущую connection epoch, sandbox и реальный Desktop engine. Он не создаёт разрешений от имени владельца.
@@ -42,7 +63,7 @@ py -3.12 adapters/windows_desktop/gateway/build.py --engine-pid <PID>
 py -3.12 adapters/windows_desktop/gateway/activate.py
 ```
 
-Запуск передаёт `CODEX_CLI_PATH` только новому процессу Desktop. Если Desktop уже открыт, активация откажет; процессы не завершаются принудительно. Оригинальный CLI не заменяется. После запуска повторите `doctor.py --native` и проверьте одну искусственную задачу: запрос разрешения должен совпасть в Desktop и Telegram, ответ владельца — получить подтверждение сервера, повторное нажатие — не повторить действие. Этот live-check не заменён offline-тестами.
+Запуск передаёт `CODEX_CLI_PATH` только новому процессу Desktop. Если Desktop уже открыт, активация откажет; процессы не завершаются принудительно. Оригинальный CLI не заменяется. Дождитесь открытия окна Desktop, затем повторите `doctor.py --native`. Продолжайте только при `ok: true` и `native_verified: true`. Проверьте одну искусственную задачу: запрос разрешения должен совпасть в Desktop и Telegram, ответ владельца — получить подтверждение сервера, повторное нажатие — не повторить действие. Этот live-check не заменён offline-тестами.
 
 Для отката штатно закройте Desktop и выполните:
 

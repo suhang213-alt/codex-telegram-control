@@ -50,7 +50,18 @@ py -3.12 adapters/windows_desktop/scripts/setup.py
 py -3.12 adapters/windows_desktop/scripts/doctor.py --native
 ```
 
-Введите `ACCEPT`, свой **Telegram ID**, **UUID служебного чата**, **путь разрешённой рабочей папки** и скрыто **токен**. Для обычного профиля и единственной версии bundled plugin нажмите Enter. Для панели на телефоне в вопросе о туннеле введите `ENABLE`; требуется установленный OpenSSH. При нескольких версиях plugin выберите совместимую установленную версию по [инструкции Windows](../adapters/windows_desktop/README.md).
+Введите `ACCEPT`, свой **Telegram ID**, **UUID служебного чата**, **путь разрешённой рабочей папки** и скрыто **токен**. Для обычного профиля и единственной версии bundled plugin нажмите Enter. Для панели на телефоне в вопросе о туннеле введите `ENABLE`; требуется установленный OpenSSH.
+
+Если `doctor` сообщает `native_plugin: FAIL` или в cache несколько версий, получите абсолютные пути каталогов, содержащих `server.mjs`:
+
+```powershell
+$codexProfile = Read-Host 'Абсолютный Codex home без кавычек (Enter: стандартный)'
+if (-not $codexProfile) { $codexProfile = Join-Path $env:USERPROFILE '.codex' }
+$pluginRoot = Join-Path $codexProfile 'plugins\cache\openai-bundled\codex-app-tools'
+Get-ChildItem -LiteralPath $pluginRoot -Directory | Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'server.mjs') -PathType Leaf } | Select-Object -ExpandProperty FullName
+```
+
+Повторите `setup.py`, введите `ACCEPT`, затем `RECONFIGURE`. В поле `Installed bundled codex-app-tools directory` вставьте один выведенный **путь каталога**, без `server.mjs`. Укажите тот же Codex home и остальные свои настройки; повторите `doctor.py --native`. Больший номер версии не доказывает совместимость. При неуспешной проверке остановитесь; подробности — в [инструкции Windows](../adapters/windows_desktop/README.md#выбор-bundled-plugin).
 
 3. Для настоящих запросов разрешений Desktop настройте [gateway](../adapters/windows_desktop/README.md#ответы-на-настоящие-запросы-разрешений-desktop). Пока Desktop открыт, получите список движков:
 
@@ -68,6 +79,11 @@ py -3.12 adapters/windows_desktop/gateway/build.py --engine-pid PID
 
 ```powershell
 py -3.12 adapters/windows_desktop/gateway/activate.py
+```
+
+Дождитесь открытия окна Desktop, затем выполните:
+
+```powershell
 py -3.12 adapters/windows_desktop/scripts/doctor.py --native
 ```
 
@@ -80,7 +96,7 @@ py -3.12 adapters/windows_desktop/scripts/pair.py
 py -3.12 adapters/windows_desktop/scripts/start.py
 ```
 
-После запуска `start.py` откройте на телефоне **личную ссылку, напечатанную `pair.py`**, нажмите Start и откройте панель. Ссылку привязки никому не пересылайте. Оставьте компьютер, Desktop и PowerShell включёнными.
+После запуска `start.py` откройте на телефоне **личную ссылку, напечатанную `pair.py`**, нажмите Start, отправьте `/menu` и откройте панель. Ссылку привязки никому не пересылайте. Оставьте компьютер, Desktop и PowerShell включёнными.
 
 ## Передача следующему пользователю
 

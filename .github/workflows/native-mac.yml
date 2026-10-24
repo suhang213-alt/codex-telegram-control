@@ -1,0 +1,24 @@
+name: Signed macOS Desktop compatibility
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  native-desktop:
+    runs-on: macos-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install .
+      - name: Verify signed Desktop launch without login or inference
+        run: python -B scripts/native_mac_ci_probe.py --output "$RUNNER_TEMP/native-mac-receipt.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-mac-receipt
+          path: ${{ runner.temp }}/native-mac-receipt.json
+          if-no-files-found: warn

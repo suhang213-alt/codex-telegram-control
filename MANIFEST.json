@@ -16,6 +16,11 @@
       "sha256": "8eb16675b7b6b149c5c149bef3bf99995c1ed91e5bfe63e4ac7ff20b09f23cc7"
     },
     {
+      "path": ".github/workflows/native-mac.yml",
+      "bytes": 768,
+      "sha256": "f14e3cc757b52dcb473245e65c92c3022fb44b7d764051b396aa06fd27491d4b"
+    },
+    {
       "path": ".gitignore",
       "bytes": 223,
       "sha256": "8da169b2fede6da361277eaa99ba434be60aad2ee08c0e41c89c4010654ce170"
@@ -347,8 +352,8 @@
     },
     {
       "path": "adapters/windows_desktop/README.md",
-      "bytes": 10473,
-      "sha256": "6e6ea436f77fb5a0778a48c5d59a08c18dffd4e79a96c42145995b717d2fa5a6"
+      "bytes": 13003,
+      "sha256": "1ea5c84dbd91a541d849e0e66bb957a0ed50179fdc70af22b57f4a1357110303"
     },
     {
       "path": "adapters/windows_desktop/requirements.txt",
@@ -462,8 +467,8 @@
     },
     {
       "path": "adapters/windows_desktop/tests/test_progress_cli.py",
-      "bytes": 11006,
-      "sha256": "806788f0636f912e6be78943b759ffdd38048f107d27d4f075415cea18db7e17"
+      "bytes": 11435,
+      "sha256": "a7abd1095d6c548329fb767e6502cc2ba836f36b3b167252bc9787ed0209ecd3"
     },
     {
       "path": "adapters/windows_desktop/tests/test_stage_progress.py",
@@ -517,18 +522,18 @@
     },
     {
       "path": "docs/QUICK_START.md",
-      "bytes": 7190,
-      "sha256": "81bc8252b8489206989f388e9ea27edf6ce0c533f552b5aba29113c37fbb4cb9"
+      "bytes": 8470,
+      "sha256": "de6f9f996d823682d173027b68efb4bbb07af30c88759941463d7280e670ad68"
     },
     {
       "path": "docs/RELEASE.md",
-      "bytes": 8796,
-      "sha256": "0285c33b967000fd2049e9e7fa331088c9218d6a79dec3f38f3f4575f9c243d3"
+      "bytes": 9503,
+      "sha256": "3a7cfd3ae28aefa4b83f22726085f43c1990e0ef23cbd87b6d5a3ab90bb2b78f"
     },
     {
       "path": "docs/VALIDATION.json",
-      "bytes": 5512,
-      "sha256": "546f12d734cb25ca630dbb473629a3d18ebca7cebda855a80a8908d6216b071f"
+      "bytes": 4951,
+      "sha256": "c8403844de4dee4ee447307fcd2d11e47af97196dd78bcf852c63b217db17bb8"
     },
     {
       "path": "LICENSE",
@@ -584,6 +589,11 @@
       "path": "scripts/install-windows.ps1",
       "bytes": 775,
       "sha256": "db1bf52aa214a1a6798f3e7d526714384a2710ddb6a180470c95cb9f45e31ccc"
+    },
+    {
+      "path": "scripts/native_mac_ci_probe.py",
+      "bytes": 9892,
+      "sha256": "cecf31cf55d91b2423abed686a53fe29cbf619e2ef34a134f02f302d867de130"
     },
     {
       "path": "scripts/test_offline.py",

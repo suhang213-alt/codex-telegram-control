@@ -121,8 +121,17 @@ class ProgressCliTests(unittest.TestCase):
         original = Path.is_symlink
         progress = self.workspace / ".task-progress"
         progress.mkdir()
-        with mock.patch.object(Path, "is_symlink", lambda p: p == progress or original(p)):
+        # Windows TEMP may use a DOS alias; the writer checks its canonical spelling.
+        redirected_paths = {progress, progress.resolve(strict=True)}
+        detected = []
+        def simulated_symlink(path):
+            if path in redirected_paths:
+                detected.append(path)
+                return True
+            return original(path)
+        with mock.patch.object(Path, "is_symlink", simulated_symlink):
             self.assertEqual(self.init(), 2)
+        self.assertTrue(detected, "The writer must reject the simulated redirected directory")
         self.assertFalse(self.path.exists())
 
     def test_cloud_placeholder_without_path_redirection_remains_usable(self):
