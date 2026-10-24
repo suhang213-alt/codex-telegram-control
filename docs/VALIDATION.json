@@ -4,7 +4,7 @@
   "date": "2026-10-24",
   "status": "candidate",
   "local_environment": {"os": "Windows x64", "python": "3.12.14"},
-  "core_guard": {"tests": 140, "failures": 0, "errors": 0, "skipped": 0, "elapsed_seconds": 26.703, "external_network_attempts": 0, "unapproved_process_attempts": 0, "passed": true},
+  "core_guard": {"tests": 142, "failures": 0, "errors": 0, "skipped": 0, "elapsed_seconds": 26.719, "external_network_attempts": 0, "unapproved_process_attempts": 0, "passed": true},
   "windows_adapter": {"tests": 295, "failures": 0, "errors": 0, "skipped": 0, "elapsed_seconds": 53.526, "passed": true, "network_attempt_counter": "not instrumented", "network_policy": "Runner blocks urllib.urlopen, socket.connect and Popen; fixture multiprocessing allowed."},
   "packaging": {"tests": 15, "failures": 0, "skipped": 0, "passed": true, "real_windows_acl": "synthetic temporary files only"},
   "workflow_lint": {"tool": "actionlint", "version": "1.7.12", "passed": true},

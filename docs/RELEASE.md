@@ -12,7 +12,7 @@ Windows x64, Python 3.12.14, 24.10.2026. Данные искусственные
 
 | Проверка | Результат и границы |
 |---|---|
-| `python -B scripts/test_offline.py` | 140 PASS, 0 ошибок, 0 пропусков; 26.703 с; внешние сетевые попытки 0, посторонние дочерние процессы 0 |
+| `python -B scripts/test_offline.py` | 142 PASS, 0 ошибок, 0 пропусков; 26.719 с; внешние сетевые попытки 0, посторонние дочерние процессы 0 |
 | `python -B adapters/windows_desktop/scripts/test_offline.py` | 295 PASS, 0 пропусков; 53.526 с; сеть и внешние программы запрещены runner, native API заменены fixtures |
 | `python -B scripts/docker_tests.py` | 15 PASS, 0 пропусков; включая реальные Windows ACL только временных файлов |
 | `actionlint` 1.7.12 | Синтаксис и связи workflow проверены, действия публикации закреплены по commit SHA |
@@ -26,7 +26,7 @@ Windows x64, Python 3.12.14, 24.10.2026. Данные искусственные
 
 - `Offline checks`: Windows/macOS/Linux × Python 3.11/3.12/3.13, Windows adapter и мобильная эмуляция Chromium/WebKit.
 - `Signed macOS Desktop compatibility`: подпись и подключение официального Desktop на чистом Mac runner без входа и запроса модели.
-- `Container package check`: установка пакета, реальный nonroot/read-only контейнер без сети и контейнерный обмен через локальные порты с искусственным host backend; исходный request ID, авторизация, отсутствие автоповтора после потери ответа.
+- `Container build and relay smoke`: установка пакета, реальный nonroot/read-only контейнер без сети и контейнерный обмен через локальные порты с искусственным host backend; исходный request ID, авторизация, отсутствие автоповтора после потери ответа.
 - `Publish reviewed Docker image`: требует успешных проверок до push, собирает `linux/amd64` и `linux/arm64`, публикует version/SHA tags и проверяет обе архитектуры в manifest. Runtime smoke исполняется на Linux amd64; arm64 подтверждается сборкой и manifest, а не отдельным исполнением.
 
 Исходный commit, digest и ссылки на CI указываются в GitHub Release. В образ не входят CI credentials, пользовательские настройки и профили.

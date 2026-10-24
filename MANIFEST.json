@@ -577,8 +577,8 @@
     },
     {
       "path": "docs/RELEASE.md",
-      "bytes": 6833,
-      "sha256": "714bbd8fd7a918d763b7ae5c7806e1fa007537d824d9e468bd9d2e4e965f1355"
+      "bytes": 6841,
+      "sha256": "813b222a5e08a3ffd680342277c91b8b0b9098ccd0b9c2ba66e412a428d99bc9"
     },
     {
       "path": "docs/RELEASE_0.2.md",
@@ -588,7 +588,7 @@
     {
       "path": "docs/VALIDATION.json",
       "bytes": 1473,
-      "sha256": "6067f26bb6d01c9d639be143a720b998a319a72ff89b2ddbac2223021ae31391"
+      "sha256": "4b5afae1eb2d68f19869c89ca4f957a671b642938cc6cdb5771d0b12d9b9ec98"
     },
     {
       "path": "docs/VALIDATION_0.2.json",
@@ -642,8 +642,8 @@
     },
     {
       "path": "scripts/docker_roundtrip.py",
-      "bytes": 10364,
-      "sha256": "ba22b2ed513afa3a0dc7a2282cdcf4d791b73f111e4058faf2e24a80f1bb0f8d"
+      "bytes": 11450,
+      "sha256": "82d7ceb9d38dea7fa5b949d3d608e108fc50ca9145f17d4a38c2f688242da4b4"
     },
     {
       "path": "scripts/docker_tests.py",
@@ -742,8 +742,8 @@
     },
     {
       "path": "src/codex_telegram/host_secrets.py",
-      "bytes": 4945,
-      "sha256": "479ee515ed142a84cd4c31343ccdc5d15522f6e851631dc8f3bdf5892ac14c84"
+      "bytes": 5486,
+      "sha256": "aa5962da3baff6111114a82c812f265b94dd54752db858c767d109305bfaf553"
     },
     {
       "path": "src/codex_telegram/macos_cli.py",
@@ -837,8 +837,8 @@
     },
     {
       "path": "tests/test_host_secrets.py",
-      "bytes": 4508,
-      "sha256": "dc3dc6c491e274517dbfbf8f47de94e7b3ea00722bf08be9fa6595dde5159137"
+      "bytes": 6704,
+      "sha256": "3845d1d9f4103add97d04fdaeb6999bd9ff9e3789a2d1c85d87ba44ed573f55a"
     },
     {
       "path": "tests/test_macos_platform.py",

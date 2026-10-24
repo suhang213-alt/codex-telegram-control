@@ -131,9 +131,11 @@ def run(image):
         key = secrets.token_bytes(32)
         setup.write_new_private(base / "telegram_bot_token", TOKEN + "\n")
         setup.write_new_private(base / "connector_key", key.hex() + "\n")
-        # Internal Docker network permits the host port test and blocks
-        # outbound Internet routing. No cloudflared container is started.
-        network = docker(["network", "create", "--internal", "ctc-fixture-" + secrets.token_hex(8)])
+        # Test the same bridge port publishing used in production. The first
+        # CI engine did not expose the expected NAT mappings in internal mode.
+        # The fixture blocks Python socket.connect/getaddrinfo; this is not
+        # a complete OS network sandbox. No cloudflared container is started.
+        network = docker(["network", "create", "ctc-fixture-" + secrets.token_hex(8)])
         if not re.fullmatch(r"[a-f0-9]{64}", network):
             raise RuntimeError("Unexpected Docker network identifier")
         args = ["run", "--detach", "--network", network, "--read-only", "--user", f"{os.getuid()}:{os.getgid()}",
@@ -142,7 +144,14 @@ def run(image):
                 "--publish", "127.0.0.1:8788:8788", "--publish", "127.0.0.1::8787"]
         for name in ("telegram_bot_token", "connector_key"):
             args += ["--mount", f"type=bind,source={base / name},target=/run/secrets/{name},readonly"]
-        args += ["--mount", f"type=bind,source={state},target=/data", image,
+        guard = ("import sys\nfrom pathlib import Path\n"
+                 "def deny_outbound(event,args):\n"
+                 " if event in ('socket.connect','socket.getaddrinfo'):\n"
+                 "  Path('/data/outbound-attempts').write_text('blocked')\n"
+                 "  raise RuntimeError('Fixture outbound connection prohibited')\n"
+                 "sys.addaudithook(deny_outbound)\n"
+                 "from codex_telegram.relay_server import main\nraise SystemExit(main())\n")
+        args += ["--mount", f"type=bind,source={state},target=/data", "--entrypoint", "python", image, "-B", "-c", guard,
                  "--public-url", PUBLIC, "--owner-id", str(OWNER), "--token-file", "/run/secrets/telegram_bot_token",
                  "--key-file", "/run/secrets/connector_key", "--state-dir", "/data"]
         container = docker(args)
@@ -150,7 +159,9 @@ def run(image):
             raise RuntimeError("Unexpected Docker container identifier")
         inspection = json.loads(docker(["inspect", container]))[0]
         ports = inspection["NetworkSettings"]["Ports"]
-        assert ports["8788/tcp"] == [{"HostIp": "127.0.0.1", "HostPort": "8788"}]
+        print(json.dumps({"container_mapping_probe": ports, "running": inspection["State"]["Running"],
+                          "exit_code": inspection["State"]["ExitCode"]}))
+        assert ports["8788/tcp"] == [{"HostIp": "127.0.0.1", "HostPort": "8788"}], "Missing loopback Docker control mapping"
         assert ports["8787/tcp"][0]["HostIp"] == "127.0.0.1"
         port = int(ports["8787/tcp"][0]["HostPort"])
         for attempt in range(30):
@@ -188,10 +199,12 @@ def run(image):
         assert status == 503 and ("unconfirmed" in result.get("error", "").lower() or "uncertain" in result.get("error", "").lower())
         time.sleep(.8)
         assert calls["fixture_unknown_1"] == 1 and len(ledger) == 2
-        assert json.loads(docker(["network", "inspect", network]))[0]["Internal"] is True
+        assert not (state / "outbound-attempts").exists(), "Unexpected outbound attempt was blocked"
         receipt = {"schema": "container-host-roundtrip/1", "passed": True, "real_container": True,
                           "desktop_backend": "synthetic", "owner_auth_twice": True, "request_id_preserved": True,
-                          "lost_response_not_replayed": True, "loopback_ports": True, "docker_network": "internal",
+                          "lost_response_not_replayed": True, "loopback_ports": True, "docker_network": "bridge",
+                          "fixture_guard": "Python socket.connect and socket.getaddrinfo blocked",
+                          "python_connect_or_getaddrinfo_attempts": 0,
                           "live_telegram": False, "live_desktop": False, "live_model": False}
     finally:
         cleanup = []
